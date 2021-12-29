@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
+</head>
+<body>
+<img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px;">
+<ul>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/books}">Browse</a></li>
+    <li><a href="#">About</a></li>
+    <li class="float-right-nav">
+        <a th:href="@{/profile/my_account}">Profile</a>
+    </li>
+    <li class="float-right-nav">
+        <a th:href="@{/cart}">Cart</a>
+    </li>
+</ul>
+<div class="content">
+    <h2>
+        Leave a Review
+    </h2>
+    <div style="display: inline-block; width: 50%">
+        <img th:src="${book.bookImage}" class="review-book-image">
+        <span>
+            <h4 th:text="${book.bookTitle} + ' by ' + ${book.bookAuthor}" class="large-text"></h4>
+        </span>
+    </div>
+    <div style="width: 50%; margin-left: auto; float: right">
+        <form method="post" th:action="@{/books/review}" th:object="${review}">
+        <span>
+            Rate the book
+        </span>
+            <input type="number" value="1" min="1" max="5" th:field="${review.score}" class="review-score">
+            <span>
+            Write review
+        </span>
+            <input type="text" placeholder="Comment" th:field="${review.reviewText}">
+            <input type="submit">
+        </form>
+    </div>
+</div>
+</body>
+</html>

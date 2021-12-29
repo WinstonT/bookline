@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+</head>
+<body>
+<h2>
+    Bookline - View Order
+</h2>
+<div>
+    <table>
+        <tr>
+            <td>
+                <b>Order ID</b>
+            </td>
+            <td>
+                <p th:text="${order.id}"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Ordered by</b>
+            </td>
+            <td>
+                <a th:href="@{/admin/customer/{id}(id=${user.id})}">
+                    <p th:text="${user.userName}"></p>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Order Date</b>
+            </td>
+            <td th:text="${#temporals.format(order.transactionDate, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+        <tr>
+            <td>
+                <b>Books Ordered</b>
+            </td>
+            <td>
+            <span th:each="book : ${order.cartItems}">
+                <div th:text="${book.book.bookTitle} + ' x' + ${book.quantity}"></div>
+            </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Amount Paid</b>
+            </td>
+            <td>
+                <p th:text="${order.totalPrice}"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Payment Type</b>
+            </td>
+            <td th:text="${order.paymentType}"></td>
+        </tr>
+        <tr>
+            <td>
+                <b>Shipping Address</b>
+            </td>
+            <td>
+                <p th:text="${order.shippingAddress}"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Status</b>
+            </td>
+            <td>
+                <p th:text="${order.orderStatus}"></p>
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{/admin/order/confirm/{id}(id=${order.id})}" th:if="${order.orderStatus != 'Completed'}">
+        <button>
+            Confirm order
+        </button>
+    </a>
+</div>
+</body>
+</html>

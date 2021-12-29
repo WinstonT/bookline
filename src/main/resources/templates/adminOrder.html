@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+</head>
+<body>
+<h2>
+    Bookline - Orders
+</h2>
+<form th:action="@{/admin/order}" method="post" th:object="${query}">
+    <input type="text" th:field="${query.id}" style="width: 90%" placeholder="Enter Order ID">
+    <input type="submit" style="float: right">
+</form>
+<table>
+    <tr>
+        <th>
+            Order ID
+        </th>
+        <th>
+            Order Date
+        </th>
+        <th>
+            Customer ID
+        </th>
+        <th>
+            Books Ordered
+        </th>
+        <th>
+            Total Price
+        </th>
+        <th>
+            Shipping Address
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    <tr th:each="order : ${orderList}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${#temporals.format(order.transactionDate, 'dd-MM-yyyy HH:mm')}"></td>
+        <td>
+            <a th:href="@{/admin/customer/{id}(id=${order.userId})}" th:text="${order.userId}"></a>
+        </td>
+        <td>
+            <span th:each="book : ${order.cartItems}">
+                <div th:text="${book.book.bookTitle} + ' x' + ${book.quantity}"></div>
+            </span>
+        </td>
+        <td th:text="${order.totalPrice}"></td>
+        <td th:text="${order.shippingAddress}"></td>
+        <td>
+            <a th:href="@{/admin/order/{id}(id=${order.id})}">
+                <button>
+                    View
+                </button>
+            </a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

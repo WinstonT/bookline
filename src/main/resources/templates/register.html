@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/signup-form.css}" type="text/css">
+</head>
+<body>
+    <div class="form-space">
+        <h2>
+            Sign Up
+        </h2>
+        <p class="error-space" id="error" th:if="${message.getPosition() == 1}" th:text="${message.getText()}"></p>
+        <form method="post" th:action="@{/register}" th:object="${user}">
+            <input type="text" th:field="*{userName}" placeholder="Full Name">
+            <input type="email" th:field="*{userEmail}" placeholder="Email Address">
+            <input type="password" th:field="*{password}" placeholder="Password" th:name="password">
+            <input type="password" placeholder="Confirm Password" th:name="confirmPassword">
+            <label>Date of Birth</label>
+            <input type="date" th:name="dateOfBirth">
+            <input type="submit" value="Register">
+        </form>
+        <small class="link">
+            Already have an account?
+            <a th:href="@{/login}" class="link-redirect">
+                Sign In
+            </a>
+        </small>
+    </div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+body{
+    height: 100%;
+}
+
+h2{
+    margin-top: 50px;
+    text-align: center;
+}
+
+.form-space{
+    width: 25%;
+    display: block;
+    margin: auto;
+    top: 17%;
+    left: 38%;
+    position: absolute;
+}
+
+.error-message{
+    color: red;
+    background-color: #f0c5c5;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+input[type="submit"]{
+    width: 100%;
+    font-size: 1.4rem;
+}
+
+.link{
+    width: 100%;
+    text-align: center;
+}
+
+.link-redirect:hover{
+    text-decoration: underline;
+    margin-bottom: 15px;
+}

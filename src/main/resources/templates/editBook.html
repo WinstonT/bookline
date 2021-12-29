@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+</head>
+<body>
+    <h2>
+        Bookline - Edit Book
+    </h2>
+    <form th:action="@{/admin/books/edit}" method="post" th:object="${book}">
+        <label>Title</label><input type="text" th:field="*{bookTitle}" readonly>
+        <p th:if="${position == 1}" class="error-message">Invalid Title</p>
+        <br>
+        <label>Author</label><input type="text" th:field="*{bookAuthor}">
+        <p th:if="${position == 2}" class="error-message">Invalid Author</p>
+        <br>
+        <label>Category</label><input type="text" th:field="*{bookCategory}">
+        <p th:if="${position == 3}" class="error-message">Invalid Category</p>
+        <br>
+        <label>Description</label><input type="text" th:field="*{bookDescription}">
+        <p th:if="${position == 4}" class="error-message">Invalid Description</p>
+        <br>
+        <label>Cover Image</label><input type="text" th:field="*{bookImage}">
+        <p th:if="${position == 5}" class="error-message">Invalid Cover Image</p>
+        <br>
+        <label>ISBN</label><input type="text" th:field="*{bookIsbn}" placeholder="ISBN13" readonly>
+        <p th:if="${position == 6}" class="error-message">Invalid ISBN</p>
+        <br>
+        <label>Year Published</label><input type="text" th:field="*{yearPublished}">
+        <p th:if="${position == 7}" class="error-message">Invalid Year Published</p>
+        <br>
+        <label>Number of Pages</label><input type="text" th:field="*{bookPages}">
+        <p th:if="${position == 8}" class="error-message">Invalid Number of Pages</p>
+        <br>
+        <label>Price</label><input type="text" th:field="*{bookPrice}">
+        <p th:if="${position == 9}" class="error-message">Invalid Price</p>
+        <br>
+        <label>Rating</label><input type="text" th:field="*{bookRating}">
+        <p th:if="${position == 10}" class="error-message">Invalid Rating</p>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

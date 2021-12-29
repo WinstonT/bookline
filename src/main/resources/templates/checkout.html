@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
+</head>
+<body>
+<img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px; padding-top: 5px">
+<ul>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/books}">Browse</a></li>
+    <li><a href="#">About</a></li>
+    <li class="float-right-nav">
+        <a th:href="@{/profile/my_account}">Profile</a>
+    </li>
+    <li class="float-right-nav">
+        <a th:href="@{/cart}">Cart</a>
+    </li>
+</ul>
+<div class="content">
+    <h2>
+        Checkout
+    </h2>
+    <table>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+        </tr>
+        <tr th:each="cart : ${cartList}">
+            <td>
+                <img th:src="${cart.book.bookImage}"/>
+                <p th:text="${cart.book.bookTitle}"></p>
+            </td>
+            <td>
+                <p th:text="${cart.book.bookPrice}"></p>
+            </td>
+            <td>
+                <p th:text="${cart.quantity}"></p>
+            </td>
+        </tr>
+    </table>
+    <p th:text="'Total price:' + ${totalPrice}"></p>
+    <form th:action="@{/checkout}" method="post" th:object="${order}">
+        <input type="text" th:field="${order.shippingAddress}" placeholder="Address">
+        <div class="error-space" th:if="${error == true}">
+            Please enter your shipping address
+        </div>
+        <label>Payment Method</label>
+        <select th:field="${order.paymentType}">
+            <option value="Credit card">Credit card</option>
+            <option value="Bank transfer">Bank transfer</option>
+            <option value="Cash on Delivery">Cash on Delivery</option>
+        </select>
+        <input type="submit" value="Confirm">
+    </form>
+</div>
+</body>
+</html>

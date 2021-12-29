@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+</head>
+<body>
+    <img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px;">
+    <ul>
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/books}">Browse</a></li>
+        <li><a href="#">About</a></li>
+        <li class="float-right-nav">
+            <a th:href="@{/profile/my_account}">Profile</a>
+        </li>
+        <li class="float-right-nav">
+            <a th:href="@{/cart}">Cart</a>
+        </li>
+    </ul>
+    <div class="content">
+        <h2>
+            Home
+        </h2>
+        <img th:src="@{/img/signin_pls.png}" height="200px" th:if="${auth == null}">
+    </div>
+</body>
+</html>

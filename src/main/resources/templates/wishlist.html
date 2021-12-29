@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline - Wishlist</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" type="text/css">
+</head>
+<body>
+<img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px; padding-top: 5px">
+<ul>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/books}">Browse</a></li>
+    <li><a href="#">About</a></li>
+    <li class="float-right-nav">
+        <a th:href="@{/profile/my_account}">Profile</a>
+    </li>
+    <li class="float-right-nav">
+        <a th:href="@{/cart}">Cart</a>
+    </li>
+</ul>
+<div class="content">
+    <h2>
+        My Wishlist
+    </h2>
+    <div class="side-menu">
+        <a th:href="@{/profile/my_account}">My Account</a>
+        <a th:href="@{/wishlist}">Wishlist</a>
+        <a th:href="@{/history}">History</a>
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+    <div class="main-content">
+        <p th:if="${message != null}" th:text="${message}"></p>
+        <table th:if="${message == null}">
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th style="visibility: hidden">
+                    Title
+                </th>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Price
+                </th>
+            </tr>
+            <tr th:each="book : ${books}">
+                <td>
+                    <a th:href="@{/books/{title}(title=${book.getBookTitle()})}">
+                        <img th:src="${book.bookImage}" >
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/books/{title}(title=${book.getBookTitle()})}" th:text="${book.bookTitle}">
+                    </a>
+                </td>
+                <td th:text="${book.bookAuthor}"></td>
+                <td th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}"></td>
+                <td>
+                    <a th:href="@{/wishlist/delete/{title}(title=${book.getBookTitle()})}">
+                        <button value="">Remove</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

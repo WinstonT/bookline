@@ -1,0 +1,161 @@
+body{
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table{
+    width: 100%;
+}
+
+td p{
+    vertical-align: center;
+}
+
+.error-message{
+    color: red;
+    background-color: #f0c5c5;
+    padding: 4px 4px 4px 4px;
+}
+
+.button-arrange{
+    vertical-align: center;
+    font-size: 1.4rem;
+    display: inline-block;
+    width: 250px;
+}
+
+.content{
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.side-menu{
+    background-color: lightgray;
+    z-index: 1;
+    overflow-x: hidden;
+    padding: 10px 0px;
+    width: 100px;
+}
+
+.side-menu a{
+    color: #9b4dcA;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+    padding: 10px 14px;
+}
+
+.side-menu a:hover{
+    color: #5f2e7d
+}
+
+.main-content{
+    left: 240px;
+    margin-left: 100px;
+    padding-left: 20px;
+}
+
+.book-card{
+    width: 35%;
+}
+
+.book-card-content{
+    padding: 5px 10px;
+}
+
+.view-book-image{
+    width: 180px;
+    height: auto;
+}
+
+.book-details-container{
+    left: 40%;
+    display: block;
+    width: 60%;
+    float: right;
+}
+
+.table-icon{
+    height: 25px;
+}
+
+.short-table{
+    width: 50%;
+}
+
+.button-large{
+    height: 4rem;
+    line-height: 30%;
+}
+
+.icon-image{
+    height: 25px;
+}
+
+.review-book-image{
+    height: 80px;
+    width: auto;
+
+}
+
+.review-score{
+    width: 50px;
+}
+
+.wrapper{
+    display: block;
+    width: 100%;
+    background-color: white;
+}
+
+.book-image img{
+    float: left;
+    width: 100px;
+    margin-right: 40px;
+    max-height: 180px;
+}
+
+.book-info{
+    float: left;
+    padding-bottom: 10px;
+    width: 80%;
+    display: block;
+    height: 180px;
+}
+
+.pagination-button-row{
+    align-items: center;
+    display: inline-block;
+    left: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+.pagination-button-row a{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.pagination-button-row .first-button{
+    margin-left: 0px;
+}
+
+.current-page{
+    text-decoration: underline;
+}
+
+.search-bar{
+    display: inline-block;
+    width: 90%;
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+.search-bar-input{
+    display: inline-block;
+    width: 500px;
+}

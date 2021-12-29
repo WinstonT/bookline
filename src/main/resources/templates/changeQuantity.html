@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline - Cart</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/cart.css}" type="text/css">
+</head>
+<body>
+<img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px; padding-top: 5px">
+<ul>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/books}">Browse</a></li>
+    <li><a href="#">About</a></li>
+    <li class="float-right-nav">
+        <a th:href="@{/profile/my_account}">Profile</a>
+    </li>
+    <li class="float-right-nav">
+        <a th:href="@{/cart}">Cart</a>
+    </li>
+</ul>
+<div class="content">
+    <h2 th:text="${cart.book.bookTitle} + ' - Change Quantity'"></h2>
+    <img th:src="${cart.book.bookImage}">
+    <form method="post" th:action="@{/cart/change_quantity}" th:object="${cart}">
+        <h4 th:text="${cart.book.bookTitle}"></h4>
+        <div th:text="'By ' + ${cart.book.bookAuthor}"></div>
+        <div th:text="'Price: Rp. ' + ${#numbers.formatDecimal(cart.book.bookPrice, 0, 'POINT', 0, 'POINT')}" id="bookPrice"></div>
+        <br>
+        <span>Quantity</span>
+        <input type="number" min="0" th:field="*{quantity}" th:value="${cart.quantity}" style="width: 20%;">
+        <input style="display: none" th:value="${cart.book}" th:field="*{book}">
+        <input type="submit" value="Change Quantity">
+    </form>
+</div>
+</body>
+</html>

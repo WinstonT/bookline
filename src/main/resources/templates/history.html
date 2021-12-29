@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline - History</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
+</head>
+<body>
+<img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px; padding-top: 5px">
+<ul>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/books}">Browse</a></li>
+    <li><a href="#">About</a></li>
+    <li class="float-right-nav">
+        <a th:href="@{/profile/my_account}">Profile</a>
+    </li>
+    <li class="float-right-nav">
+        <a th:href="@{/cart}">Cart</a>
+    </li>
+</ul>
+<div class="content">
+    <h2>
+        History
+    </h2>
+    <h4>Books Ordered</h4>
+    <div th:if="${orderList.size() == 0}">No books ordered yet</div>
+    <div th:each="order : ${orderList}">
+        <h6 th:text="'Order ID: ' + ${order.id}">
+        </h6>
+        <table>
+            <tr>
+                <th>
+                    Book
+                </th>
+                <th>
+                    Author
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+            <tr th:each="book : ${order.cartItems}">
+                <td th:text="${book.book.bookTitle}">
+                    <img th:src="${book.book.bookImage}">
+                </td>
+                <td th:text="${book.book.bookAuthor}"></td>
+                <td th:text="'Rp. ' + ${#numbers.formatDecimal(book.book.bookPrice, 0, 'POINT', 0, 'POINT')}"></td>
+                <td th:text="${book.quantity}"></td>
+                <td>
+                    <a th:href="@{/books/{title}/review(title=${book.book.bookTitle})}">
+                        <button>
+                            Leave Review
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+        <div th:text="'Total Price: Rp. ' + ${order.totalPrice}" style="font-weight: bold"></div>
+        <div th:text="'Transaction Date: ' + ${#temporals.format(order.transactionDate, 'dd-MMM-yyyy HH:mm')}"></div>
+        <div th:text="'Payment Type: ' + ${order.paymentType}"></div>
+        <hr style="color: #000">
+    </div>
+</div>
+</body>
+</html>

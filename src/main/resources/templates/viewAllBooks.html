@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+</head>
+<body onload="">
+    <h2>
+        Bookline - View All Books
+    </h2>
+    <a th:href="@{/admin/books/add}" style="float: right">
+        <button>Add new book</button>
+    </a>
+    <table>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Author
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Rating
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.getBookTitle()}"></td>
+            <td th:text="${book.getBookAuthor()}"></td>
+            <td th:text="${book.getBookPrice()}"></td>
+            <td th:text="${book.getBookRating()}"></td>
+            <td class="button-arrange">
+                <a th:href="@{/admin/books/view/{title}(title=${book.getBookTitle()})}">
+                    <button>
+                        <i class="far fa-eye"></i>
+                    </button>
+                </a>
+                <a th:href="@{/admin/books/edit/{title}(title=${book.getBookTitle()})}">
+                    <button>
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                </a>
+                <a th:href="@{/admin/books/delete/{isbn}(isbn=${book.getBookIsbn()})}">
+                    <button>
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </a>
+            </td>
+        </tr>
+    </table>
+    <br>
+
+</body>
+</html>
