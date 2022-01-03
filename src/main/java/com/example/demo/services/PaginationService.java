@@ -16,16 +16,18 @@ public class PaginationService {
 
     private static final double PAGE_SIZE = 20;
 
-    public Map<Integer, List<Book>> getPage(@Nullable String query,
+    public Map<String, List<Book>> getPage(@Nullable String query,
                                             @Nullable String sortBy,
                                             @Nullable String order,
                                             @Nullable int page){
         List<Book> bookList = new ArrayList<>();
-        Map<Integer, List<Book>>  map = new HashMap<>();
+        Map<String, List<Book>>  map = new HashMap<>();
+        int totalResults = 0;
         if(query != null && !query.isEmpty()) {
-            bookList.addAll(bookService.findBook(query));
+            bookList.addAll(bookService.findBookContaining(query));
             bookList.addAll(bookService.findBookByAuthor(query));
             bookList.addAll(bookService.findBookByCategory(query));
+            totalResults = bookList.size();
         }
         else {
             bookList = bookService.getAllBooks();
@@ -36,28 +38,33 @@ public class PaginationService {
         if (order == null){
             order = "desc";
         }
+        String lastPage = getLastPageIndex(bookList);
+        String key = "" + lastPage + "_" + totalResults;
         if(sortBy.equals("rating")){
             if(order.equals("asc")){
-                map.put(2, getPageWithRatingAsc(bookList, page));
+                map.put("2_" + key, getPageWithRatingAsc(bookList, page));
             }
-            else map.put(1, getPageWithRatingDesc(bookList, page));
+            else map.put("1_" + key, getPageWithRatingDesc(bookList, page));
         }
         if(sortBy.equals("price")){
             if(order.equals("asc")){
-                map.put(4, getPageWithPriceAsc(bookList, page));
+                map.put("4_" + key, getPageWithPriceAsc(bookList, page));
             }
-            else map.put(3, getPageWithPriceDesc(bookList, page));
+            else map.put("3_" + key, getPageWithPriceDesc(bookList, page));
         }
         if(sortBy.equals("title")){
             if(order.equals("asc")){
-                map.put(5, getPageWithTitleAsc(bookList, page));
+                map.put("5_" + key, getPageWithTitleAsc(bookList, page));
             }
-            else map.put(6, getPageWithTitleDesc(bookList, page));
+            else map.put("6_" + key, getPageWithTitleDesc(bookList, page));
         }
         return map;
     }
 
     public List<Book> checkEndPage(List<Book> bookList, int page){
+        if(bookList.size() == 1){
+            return bookList;
+        }
         if(Math.floor(bookList.size() / PAGE_SIZE) * PAGE_SIZE != bookList.size() && Math.floor(bookList.size() / PAGE_SIZE) + 1 == page){
             return bookList.subList((int) ((page - 1) * PAGE_SIZE), bookList.size() - 1);
         }
@@ -88,12 +95,10 @@ public class PaginationService {
         return checkEndPage(bookList.stream().sorted(Comparator.comparing(Book::getBookTitle)).collect(Collectors.toList()), page);
     }
 
-    public int getLastPageIndex(List<Book> bookList) {
+    public String getLastPageIndex(List<Book> bookList) {
         if (Math.floor(bookList.size() / PAGE_SIZE) * PAGE_SIZE != bookList.size()) {
-            return (int) (Math.floor(bookList.size() / PAGE_SIZE) + 1);
+            return (int) (Math.floor(bookList.size() / PAGE_SIZE) + 1) + "";
         }
-        return (int) Math.floor(bookList.size() / PAGE_SIZE);
+        return (int) Math.floor(bookList.size() / PAGE_SIZE) + "";
     }
 }
-
-// TODO : pagination with query last page

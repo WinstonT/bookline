@@ -8,26 +8,221 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
     <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
     <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 </head>
-<body>
+<body onload="toggleCategory(1)">
+    <script type="text/javascript">
+        function toggleCategory(category){
+            if(category === 1){
+                document.getElementsByClassName("product-card fiction-books").style.display = "block";
+                document.getElementsByClassName("product-card poetry-books").style.display = "none";
+                document.getElementsByClassName("product-card cooking-books").style.display = "none";
+                document.getElementsByClassName("product-card philosophy-books").style.display = "none";
+                document.getElementsByClassName("product-card comic-books").style.display = "none";
+            }
+            if(category === 2){
+                document.getElementsByClassName("fiction-books").style.display = "none";
+                document.getElementsByClassName("poetry-books").style.display = "block";
+                document.getElementsByClassName("cooking-books").style.display = "none";
+                document.getElementsByClassName("philosophy-books").style.display = "none";
+                document.getElementsByClassName("comic-books").style.display = "none";
+            }
+            if(category === 3){
+                document.getElementsByClassName("fiction-books").style.display = "none";
+                document.getElementsByClassName("poetry-books").style.display = "none";
+                document.getElementsByClassName("cooking-books").style.display = "block";
+                document.getElementsByClassName("philosophy-books").style.display = "none";
+                document.getElementsByClassName("comic-books").style.display = "none";
+            }
+            if(category === 4){
+                document.getElementsByClassName("fiction-books").style.display = "none";
+                document.getElementsByClassName("poetry-books").style.display = "none";
+                document.getElementsByClassName("cooking-books").style.display = "none";
+                document.getElementsByClassName("philosophy-books").style.display = "block";
+                document.getElementsByClassName("comic-books").style.display = "none";
+            }
+            if(category === 5){
+                document.getElementsByClassName("fiction-books").style.display = "none";
+                document.getElementsByClassName("poetry-books").style.display = "none";
+                document.getElementsByClassName("cooking-books").style.display = "none";
+                document.getElementsByClassName("philosophy-books").style.display = "none";
+                document.getElementsByClassName("comic-books").style.display = "block";
+            }
+        }
+    </script>
     <img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px;">
     <ul>
         <li><a th:href="@{/}">Home</a></li>
         <li><a th:href="@{/books}">Browse</a></li>
         <li><a href="#">About</a></li>
-        <li class="float-right-nav">
+        <li th:if="${auth != null}" class="float-right-nav">
             <a th:href="@{/profile/my_account}">Profile</a>
         </li>
-        <li class="float-right-nav">
-            <a th:href="@{/cart}">Cart</a>
+        <li th:if="${auth != null}" class="float-right-nav">
+            <a th:href="@{/Cart}"></a>
+        </li>
+        <li th:if="${auth == null}" class="float-right-nav">
+            <a th:href="@{/login}">Login</a>
         </li>
     </ul>
     <div class="content">
-        <h2>
-            Home
-        </h2>
+        <h3>
+            Bestsellers
+        </h3>
+        <div class="product-card" th:each="book : ${bestSeller}" style="">
+            <a th:href="@{/books/{title}(title=${book.bookTitle})}" style="height: 100%; width: 100%;">
+                <img th:src="${book.bookImage}" height="120px" style="max-width: fit-content; overflow-wrap: break-word;">
+                <h4 th:if="${book.bookTitle.length() <= 50}" th:text="${book.bookTitle}" style="color:#606c76;"></h4>
+                <h4 th:if="${book.bookTitle.length() > 45}" th:text="${book.bookTitle.substring(0, 45) + '..'}" style="color:#606c76;"></h4>
+                <div style="left: 34%; position: absolute; bottom: 0">
+                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="color:#606c76;"></b>
+                    <br>
+                    <a th:href="@{/books/{title}(title=${book.bookTitle})}">
+                        <button>Buy</button>
+                    </a>
+                </div>
+            </a>
+        </div>
+        <br><br>
+        <h3>
+            Recommended for you
+        </h3>
+        <div class="product-card" th:each="book : ${booksForYou}">
+            <a th:href="@{/books/{title}(title=${book.bookTitle})}" style="height: 100%; width: 100%;">
+                <img th:src="${book.bookImage}" height="120px" style="max-width: fit-content; overflow-wrap: break-word;">
+                <h4 th:if="${book.bookTitle.length() <= 50}" th:text="${book.bookTitle}" style="color:#606c76;"></h4>
+                <h4 th:if="${book.bookTitle.length() > 45}" th:text="${book.bookTitle.substring(0, 45) + '..'}" style="color:#606c76;"></h4>
+                <div style="left: 34%; position: absolute; bottom: 0">
+                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="color:#606c76;"></b>
+                    <br>
+                    <a th:href="@{/books/{title}(title=${book.bookTitle})}">
+                        <button>Buy</button>
+                    </a>
+                </div>
+            </a>
+        </div>
+        <br><br>
+        <h3>
+            Recently Added
+        </h3>
+        <div class="product-card" th:each="book : ${recentlyAdded}">
+            <a th:href="@{/books/{title}(title=${book.bookTitle})}" style="height: 100%; width: 100%;">
+                <img th:src="${book.bookImage}" height="120px" style="max-width: fit-content; overflow-wrap: break-word;">
+                <h4 th:if="${book.bookTitle.length() <= 50}" th:text="${book.bookTitle}" style="color:#606c76;"></h4>
+                <h4 th:if="${book.bookTitle.length() > 45}" th:text="${book.bookTitle.substring(0, 45) + '..'}" style="color:#606c76;"></h4>
+                <div style="left: 34%; position: absolute; bottom: 0">
+                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="color:#606c76;"></b>
+                    <br>
+                    <a th:href="@{/books/{title}(title=${book.bookTitle})}">
+                        <button>Buy</button>
+                    </a>
+                </div>
+            </a>
+        </div>
+        <br><br>
+        <h3>
+            Search over 1000+ books
+        </h3>
+        <div class="search-bar" style="margin-bottom: 50px; vertical-align: bottom">
+            <form th:action="@{/books/}">
+                <input type="text" th:value="${search}" name="search" placeholder="Search book by title, author or genre" style="max-width: 90%">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+
+<!--        <h3>-->
+<!--            Popular Categories-->
+<!--        </h3>-->
+<!--        <div style="display: inline-block; width: 100%;">-->
+<!--            <button class="button-outline" onclick="toggleCategory(1)">-->
+<!--                Fiction-->
+<!--            </button>-->
+<!--            <button class="button-outline" onclick="toggleCategory(2)">-->
+<!--                Poetry-->
+<!--            </button>-->
+<!--            <button class="button-outline" onclick="toggleCategory(3)">-->
+<!--                Cooking-->
+<!--            </button>-->
+<!--            <button class="button-outline" onclick="toggleCategory(4)">-->
+<!--                Philosophy-->
+<!--            </button>-->
+<!--            <button class="button-outline" onclick="toggleCategory(5)">-->
+<!--                Comics-->
+<!--            </button>-->
+<!--        </div>-->
+<!--        <div class="product-card fiction-books" th:each="book : ${fiction}">-->
+<!--            <a th:href="@{/books/{title}(title=${book.bookTitle})}" style="height: 100%; width: 100%;">-->
+<!--                <img th:src="${book.bookImage}" height="120px" style="max-width: fit-content; overflow-wrap: break-word;">-->
+<!--                <h4 th:if="${book.bookTitle.length() <= 50}" th:text="${book.bookTitle}" style="color:#606c76;"></h4>-->
+<!--                <h4 th:if="${book.bookTitle.length() > 45}" th:text="${book.bookTitle.substring(0, 45) + '..'}" style="color:#606c76;"></h4>-->
+<!--                <div style="left: 34%; position: absolute; bottom: 0">-->
+<!--                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="color:#606c76;"></b>-->
+<!--                    <br>-->
+<!--                    <a th:href="@{/books/{title}(title=${book.bookTitle})}">-->
+<!--                        <button>Buy</button>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="product-card poetry-books" th:each="book : ${poetry}">-->
+<!--            <a th:href="@{/books/{title}(title=${book.bookTitle})}" style="height: 100%; width: 100%;">-->
+<!--                <img th:src="${book.bookImage}" height="120px" style="max-width: fit-content; overflow-wrap: break-word;">-->
+<!--                <h4 th:if="${book.bookTitle.length() <= 50}" th:text="${book.bookTitle}" style="color:#606c76;"></h4>-->
+<!--                <h4 th:if="${book.bookTitle.length() > 45}" th:text="${book.bookTitle.substring(0, 45) + '..'}" style="color:#606c76;"></h4>-->
+<!--                <div style="left: 34%; position: absolute; bottom: 0">-->
+<!--                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="color:#606c76;"></b>-->
+<!--                    <br>-->
+<!--                    <a th:href="@{/books/{title}(title=${book.bookTitle})}">-->
+<!--                        <button>Buy</button>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="product-card cooking-books" th:each="book : ${cooking}" id="">-->
+<!--            <a th:href="@{/books/{title}(title=${book.bookTitle})}" style="height: 100%; width: 100%;">-->
+<!--                <img th:src="${book.bookImage}" height="120px" style="max-width: fit-content; overflow-wrap: break-word;">-->
+<!--                <h4 th:if="${book.bookTitle.length() <= 50}" th:text="${book.bookTitle}" style="color:#606c76;"></h4>-->
+<!--                <h4 th:if="${book.bookTitle.length() > 45}" th:text="${book.bookTitle.substring(0, 45) + '..'}" style="color:#606c76;"></h4>-->
+<!--                <div style="left: 34%; position: absolute; bottom: 0">-->
+<!--                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="color:#606c76;"></b>-->
+<!--                    <br>-->
+<!--                    <a th:href="@{/books/{title}(title=${book.bookTitle})}">-->
+<!--                        <button>Buy</button>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="product-card philosophy-books" th:each="book : ${philosophy}">-->
+<!--            <a th:href="@{/books/{title}(title=${book.bookTitle})}" style="height: 100%; width: 100%;">-->
+<!--                <img th:src="${book.bookImage}" height="120px" style="max-width: fit-content; overflow-wrap: break-word;">-->
+<!--                <h4 th:if="${book.bookTitle.length() <= 50}" th:text="${book.bookTitle}" style="color:#606c76;"></h4>-->
+<!--                <h4 th:if="${book.bookTitle.length() > 45}" th:text="${book.bookTitle.substring(0, 45) + '..'}" style="color:#606c76;"></h4>-->
+<!--                <div style="left: 34%; position: absolute; bottom: 0">-->
+<!--                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="color:#606c76;"></b>-->
+<!--                    <br>-->
+<!--                    <a th:href="@{/books/{title}(title=${book.bookTitle})}">-->
+<!--                        <button>Buy</button>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="product-card comic-books" th:each="book : ${comic}">-->
+<!--            <a th:href="@{/books/{title}(title=${book.bookTitle})}" style="height: 100%; width: 100%;">-->
+<!--                <img th:src="${book.bookImage}" height="120px" style="max-width: fit-content; overflow-wrap: break-word;">-->
+<!--                <h4 th:if="${book.bookTitle.length() <= 50}" th:text="${book.bookTitle}" style="color:#606c76;"></h4>-->
+<!--                <h4 th:if="${book.bookTitle.length() > 45}" th:text="${book.bookTitle.substring(0, 45) + '..'}" style="color:#606c76;"></h4>-->
+<!--                <div style="left: 34%; position: absolute; bottom: 0">-->
+<!--                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="color:#606c76;"></b>-->
+<!--                    <br>-->
+<!--                    <a th:href="@{/books/{title}(title=${book.bookTitle})}">-->
+<!--                        <button>Buy</button>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
         <img th:src="@{/img/signin_pls.png}" height="200px" th:if="${auth == null}">
     </div>
 </body>
 </html>
+
+<!--TODO: add Popular category and search bar -->

@@ -31,6 +31,10 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    public Book findBookById(String id){
+        return bookRepository.findById(id).get();
+    }
+
     public List<Book> findBook(String bookTitle){
         return bookRepository.findByBookTitle(bookTitle);
     }
@@ -41,6 +45,10 @@ public class BookService {
 
     public List<Book> findBookByCategory(String category){
         return bookRepository.findBookByBookCategory(category);
+    }
+
+    public List<Book> findBookContaining(String query){
+        return bookRepository.findBooksByBookTitleIsContaining(query);
     }
 
     public List<Book> getAllBooks(){

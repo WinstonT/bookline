@@ -97,7 +97,7 @@ td p{
 }
 
 .review-book-image{
-    height: 80px;
+    height: 150px;
     width: auto;
 
 }
@@ -158,4 +158,21 @@ td p{
 .search-bar-input{
     display: inline-block;
     width: 500px;
+}
+
+.product-card{
+    height: 320px;text-align: center; display: inline-block; width: 23%; border: 2px solid lightgray; border-radius: 5px; position: relative; margin-right: 15px; margin-bottom: 30px; padding-top: 20px; vertical-align: top;
+}
+
+.product-card:hover{
+    border: 2px solid #9b4dcA;
+}
+
+.fa-shopping-cart, .fa-cart-plus, .fa-heart{
+    font-size: 2.0rem;
+}
+
+.button-outline{
+    width: 17%;
+    margin-right: 20px;
 }

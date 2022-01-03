@@ -30,11 +30,17 @@ public class CheckoutController {
 
     @GetMapping(value = "/checkout")
     public String checkout(Model model){
-        List<Cart> cartList = bookService.getCartList(Session.getSession());
-        model.addAttribute("cartList", cartList);
-        model.addAttribute("totalPrice", orderService.getOrderTotalPrice(cartList));
-        model.addAttribute("order", new Order());
-        model.addAttribute("error", false);
+        try {
+            List<Cart> cartList = bookService.getCartList(Session.getSession());
+            model.addAttribute("cartList", cartList);
+            model.addAttribute("totalPrice", orderService.getOrderTotalPrice(cartList));
+            model.addAttribute("order", new Order());
+            model.addAttribute("error", false);
+            model.addAttribute("user", Session.getSession());
+        }
+        catch (NullPointerException e){
+            return "redirect:/error";
+        }
         return "checkout";
     }
 

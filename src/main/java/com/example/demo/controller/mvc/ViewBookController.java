@@ -5,6 +5,7 @@ import com.example.demo.models.Book;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Review;
 import com.example.demo.services.BookService;
+import com.example.demo.services.OrderService;
 import com.example.demo.services.ReviewService;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class ViewBookController {
     private UserService userService;
 
     @Autowired
+    private OrderService orderService;
+
+    @Autowired
     private ReviewService reviewService;
 
     @GetMapping(value = "/books/{title}")
@@ -36,6 +40,7 @@ public class ViewBookController {
         List<Review> reviewList = reviewService.getReviewByBook(book.getId());
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("avgScore", reviewService.getAverageScore(book.getId()));
+        model.addAttribute("sold", orderService.getNumberOfBooksSold(book.getId()));
         try{
             model.addAttribute("bookInCart", userService.checkIfBookExistInCart(Session.getSession(), bookTitle));
             model.addAttribute("bookInWishlist", userService.checkBookExistInWishlist(Session.getSession(), bookTitle));

@@ -41,19 +41,25 @@
         </tr>
         <tr th:each="cart : ${cartList}">
             <td>
-                <img th:src="${cart.book.bookImage}"/>
-                <p th:text="${cart.book.bookTitle}"></p>
+                <img th:src="${cart.book.bookImage}" style="width: 65px;"/>
+                <span th:text="${cart.book.bookTitle}"></span>
             </td>
             <td>
-                <p th:text="${cart.book.bookPrice}"></p>
+                <p th:text="'Rp. ' + ${#numbers.formatDecimal(cart.book.bookPrice * cart.quantity, 0 ,'POINT', 0, 'POINT')}"></p>
             </td>
             <td>
                 <p th:text="${cart.quantity}"></p>
             </td>
         </tr>
     </table>
-    <p th:text="'Total price:' + ${totalPrice}"></p>
-    <form th:action="@{/checkout}" method="post" th:object="${order}">
+    <b th:text="'Total price:' + 'Rp. ' + ${#numbers.formatDecimal(totalPrice, 0 ,'POINT', 0, 'POINT')}"></b>
+    <br>
+    <span th:text="'Name: ' + ${user.userName}"></span>
+    <br>
+    <span th:text="'Email: ' + ${user.userEmail}"></span>
+    <br>
+    <form th:action="@{/checkout}" method="post" th:object="${order}" style="margin-top: 20px; width: 45%">
+        <label>Shipping Address</label>
         <input type="text" th:field="${order.shippingAddress}" placeholder="Address">
         <div class="error-space" th:if="${error == true}">
             Please enter your shipping address

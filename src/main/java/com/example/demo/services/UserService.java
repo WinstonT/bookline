@@ -60,7 +60,7 @@ public class UserService{
                 .userName(user.getUserName())
                 .userEmail(user.getUserEmail())
                 .password(aesEncryption.encrypt(user.getPassword(), "secret_key"))
-                .userRole("user")
+                .userRole(user.getUserRole())
                 .isAuthenticated(user.isAuthenticated())
                 .userDateOfBirth(user.getUserDateOfBirth())
                 .wishlist(list)

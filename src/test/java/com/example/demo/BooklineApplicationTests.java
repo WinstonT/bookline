@@ -123,10 +123,10 @@ class BooklineApplicationTests {
     public void addUser(){
         LocalDate date = LocalDate.now();
         User user = User.builder()
-                .userName("John")
-                .userEmail("john@email.com")
-                .password("John123")
-                .userRole("user")
+                .userName("admin")
+                .userEmail("admin@email.com")
+                .password("Admin123")
+                .userRole("admin")
                 .userDateOfBirth(date)
                 .isAuthenticated(false)
                 .build();
@@ -177,6 +177,11 @@ class BooklineApplicationTests {
     }
 
     @Test
+    public void test(){
+        System.out.println(orderService.getPendingOrders());
+    }
+
+    @Test
     public void getAllReviews(){
         for(Review review: reviewRepository.findAll()){
             System.out.println(review);
@@ -201,5 +206,10 @@ class BooklineApplicationTests {
     @Test
     public void readFIle(){
         bookDataReader.readData();
+    }
+
+    @Test
+    public void test2(){
+        System.out.println(bookService.findBookByAuthor("Christopher J. H. Wright"));
     }
 }

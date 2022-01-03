@@ -11,8 +11,6 @@ public interface OrderRepository extends ElasticsearchRepository<Order, String> 
 
     List<Order> findByUserId(String userId);
 
-    Order findOrderById(String id);
-
     List<Order> getOrderById(String id);
 
     void deleteAll();

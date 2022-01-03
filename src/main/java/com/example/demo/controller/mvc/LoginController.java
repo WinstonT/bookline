@@ -49,11 +49,10 @@ public class LoginController {
             else{
                 String decoded = aesEncryption.decrypt(verifiedUser.getPassword(), "secret_key");
                 if(user.getPassword().equals(decoded)){
-                    verifiedUser.setAuthenticated(true);
                     Session.setSession(verifiedUser);
                     Session.getSession().setAuthenticated(true);
-                    if(verifiedUser.getUserRole().equals("admin")){
-                        //return "adminLandingPage";
+                    if(Session.getSession().getUserRole().equals("admin")){
+                        return "redirect:/admin/dashboard";
                     }
                     return "redirect:/home";
                 }

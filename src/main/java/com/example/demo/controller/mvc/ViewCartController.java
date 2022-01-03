@@ -24,6 +24,7 @@ public class ViewCartController {
 
     @GetMapping(value = "/cart")
     public String getCart(Model model){
+        model.addAttribute("auth", Session.getSession());
         try{
             if(Session.getSession().getCartList().isEmpty()){
                 model.addAttribute("message", "Your cart is empty.");

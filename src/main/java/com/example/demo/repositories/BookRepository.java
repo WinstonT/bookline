@@ -15,9 +15,7 @@ public interface BookRepository extends ElasticsearchRepository<Book, String> {
 
     List<Book> findBookByBookCategory(String bookCategory);
 
-    List<Book> findBookByBookTitleOrBookAuthor(String bookTitle, String bookAuthor);
-
-    List<Book> findBookByBookTitleContaining(String searchQuery);
+    List<Book> findBooksByBookTitleIsContaining(String query);
 
     void deleteBookByBookIsbn(String bookIsbn);
 

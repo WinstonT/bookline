@@ -16,11 +16,14 @@
         <li><a th:href="@{/}">Home</a></li>
         <li><a th:href="@{/books}">Browse</a></li>
         <li><a href="#">About</a></li>
-        <li class="float-right-nav">
+        <li th:if="${auth != null}" class="float-right-nav">
             <a th:href="@{/profile/my_account}">Profile</a>
         </li>
-        <li class="float-right-nav">
-            <a th:href="@{/cart}">Cart</a>
+        <li th:if="${auth != null}" class="float-right-nav">
+            <a th:href="@{/Cart}"></a>
+        </li>
+        <li th:if="${auth == null}" class="float-right-nav">
+            <a th:href="@{/login}">Login</a>
         </li>
     </ul>
     <div class="content">
@@ -37,12 +40,12 @@
                     <a th:href="@{/books/{title}(title=${cart.book.bookTitle})}" style="color: #606c76; width: fit-content">
                         <h4 th:text="${cart.book.bookTitle}"></h4>
                     </a>
-                    <a th:text="${cart.book.bookAuthor}" th:href="@{/books/search=${cart.book.bookAuthor})}"></a>
+                    <a th:text="${cart.book.bookAuthor}" th:href="@{/books/(search=${cart.book.bookAuthor})}"></a>
                     <span th:text="' | '"></span>
                     <a th:text="${cart.book.bookCategory}" th:href="@{/books/(search=${cart.book.bookCategory})}"></a>
                     <br>
-                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(cart.book.bookPrice, 0, 'POINT', 0, 'COMMA')}"></b>
-                    <span th:text="'Quantity: ' + ${cart.quantity}"></span>
+                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(cart.book.bookPrice * cart.quantity, 0, 'POINT', 0, 'COMMA')}"></b>
+                    <span th:text="' | Quantity: ' + ${cart.quantity}"></span>
                 </div>
                 <a th:href="@{/cart/change_quantity/{title}(title=${cart.book.bookTitle})}">
                     <button>Change Quantity</button>

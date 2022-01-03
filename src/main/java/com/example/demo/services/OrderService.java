@@ -1,8 +1,10 @@
 package com.example.demo.services;
 
+import com.example.demo.models.Book;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Order;
 import com.example.demo.repositories.OrderRepository;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -14,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -52,7 +57,7 @@ public class OrderService {
 
     public List<Order> getCompletedOrdersByCustomer(String userId){
         List<Order> orders = orderRepository.findByUserId(userId);
-        orders.removeIf(order -> order.getOrderStatus().equals("Completed"));
+        orders.removeIf(order -> !order.getOrderStatus().equals("Completed"));
         return orders;
     }
 
@@ -62,6 +67,26 @@ public class OrderService {
             totalPrice = totalPrice  + cart.getBook().getBookPrice() * cart.getQuantity();
         }
         return totalPrice;
+    }
+
+    public List<Book> getPurchasedBooks(String userId){
+        List<Book> bookList = new ArrayList<>();
+        for(Order order: getCompletedOrdersByCustomer(userId)){
+            for(Cart cart: order.getCartItems()){
+                bookList.add(cart.getBook());
+            }
+        }
+        return bookList;
+    }
+
+    public List<Order> getPendingOrders(){
+        List<Order> orderList = getAllOrders();
+        orderList.removeIf(order -> !order.getOrderStatus().equals("Pending confirmation"));
+        int maxIndex = 5;
+        if(maxIndex > orderList.size()){
+            maxIndex = orderList.size();
+        }
+        return orderList.stream().sorted(Comparator.comparing(Order::getTransactionDate).reversed()).collect(Collectors.toList()).subList(0, maxIndex);
     }
 
     public void deleteAllOrders(){
@@ -81,5 +106,17 @@ public class OrderService {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+    }
+
+    public int getNumberOfBooksSold(String bookId){
+        int sold = 0;
+        for(Order order: getAllOrders()){
+            for(Cart cart: order.getCartItems()){
+                if(cart.getBook().getId().equals(bookId)){
+                    sold++;
+                }
+            }
+        }
+        return sold;
     }
 }

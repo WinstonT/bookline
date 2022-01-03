@@ -14,81 +14,88 @@
             window.location.replace("http://localhost:8080/books/" + query);
         }
     </script>
-    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
 </head>
 <body>
-<img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px;">
-<ul>
-    <li><a th:href="@{/}">Home</a></li>
-    <li><a th:href="@{/books}">Browse</a></li>
-    <li><a href="#">About</a></li>
-    <li class="float-right-nav">
-        <a th:href="@{/profile/my_account}">Profile</a>
-    </li>
-    <li class="float-right-nav">
-        <a th:href="@{/cart}">Cart</a>
-    </li>
-</ul>
-<div class="content">
-    <div class="search-bar" style="margin-bottom: 25px">
-        <form th:action="@{/books/}">
-            <input type="text" th:value="${search}" name="search" placeholder="Search book by title or author" style="max-width: 60%">
-            <button type="submit"><i class="fas fa-search"></i></button>
-        </form>
-    </div>
-    <br>
-    <div class="sort-form">
-        <span>Sort by</span>
-        <select onchange="changeSort(value)" style="max-width: 200px">
-            <option th:value="${'?search=' + search + '&sort=rating&order=desc'}" th:selected="${attr == 1}">Rating: High to Low</option>
-            <option th:value="${'?search=' + search + '&sort=rating&order=asc'}" th:selected="${attr == 2}">Rating: Low to High</option>
-            <option th:value="${'?search=' + search + '&sort=price&order=desc'}" th:selected="${attr == 3}">Price: High to low</option>
-            <option th:value="${'?search=' + search + '&sort=price&order=asc'}" th:selected="${attr == 4}">Price: Low to High</option>
-            <option th:value="${'?search=' + search + '&sort=title&order=asc'}" th:selected="${attr == 5}">Title: A to Z</option>
-            <option th:value="${'?search=' + search + '&sort=title&order=desc'}" th:selected="${attr == 6}">Title: Z to A</option>
-        </select>
-    </div>
-    <span th:if="${books.isEmpty()}">No search results</span>
-    <span th:if="${search != null}" th:text="'Displaying ' + ${books.size()} + ' results for ' + '\'' + ${search} + '\''" style="padding-bottom: 20px"></span>
-    <br>
-    <div class="wrapper" th:each="book: ${books}">
-        <div class="book-image">
-            <img th:src="${book.bookImage}">
+    <img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px;">
+    <ul>
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/books}">Browse</a></li>
+        <li><a href="#">About</a></li>
+        <li th:if="${auth != null}" class="float-right-nav">
+            <a th:href="@{/profile/my_account}">Profile</a>
+        </li>
+        <li th:if="${auth != null}" class="float-right-nav">
+            <a th:href="@{/Cart}"></a>
+        </li>
+        <li th:if="${auth == null}" class="float-right-nav">
+            <a th:href="@{/login}">Login</a>
+        </li>
+    </ul>
+    <div class="content">
+        <div class="search-bar" style="margin-bottom: 25px">
+            <form th:action="@{/books/}">
+                <input type="text" th:value="${search}" name="search" placeholder="Search book by title, author or genre" style="max-width: 60%">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
         </div>
-        <div class="book-info">
-            <div class="book-info-text">
-                <h4 th:text="${book.bookTitle}"></h4>
-                <span>
-                    <i class="fas fa-star"></i>
-                    <b th:text="${book.bookRating} + '&nbsp;&nbsp;'"></b>
-                </span>
-                <a th:text="${book.bookAuthor}" th:href="@{/books/(search=${book.bookAuthor})}"></a>
-                <span th:text="' | '"></span>
-                <a th:text="${book.bookCategory}" th:href="@{/books/(search=${book.bookCategory})}"></a>
-                <br>
-                <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'COMMA')}"></b>
+        <br>
+        <div class="sort-form">
+            <span>Sort by</span>
+            <select onchange="changeSort(value)" style="max-width: 200px">
+                <option th:value="${'?search=' + search + '&sort=rating&order=desc'}" th:selected="${attr == 1}">Rating: High to Low</option>
+                <option th:value="${'?search=' + search + '&sort=rating&order=asc'}" th:selected="${attr == 2}">Rating: Low to High</option>
+                <option th:value="${'?search=' + search + '&sort=price&order=desc'}" th:selected="${attr == 3}">Price: High to low</option>
+                <option th:value="${'?search=' + search + '&sort=price&order=asc'}" th:selected="${attr == 4}">Price: Low to High</option>
+                <option th:value="${'?search=' + search + '&sort=title&order=asc'}" th:selected="${attr == 5}">Title: A to Z</option>
+                <option th:value="${'?search=' + search + '&sort=title&order=desc'}" th:selected="${attr == 6}">Title: Z to A</option>
+            </select>
+        </div>
+        <span th:if="${books.isEmpty()}">No search results</span>
+        <span th:if="${!books.isEmpty() && search != null} " th:text="'Displaying ' + ${totalResults} + ' results for ' + '\'' + ${search} + '\''" style="padding-bottom: 20px"></span>
+        <br><br>
+        <div class="wrapper" th:each="book: ${books}">
+            <div class="book-image">
+                <img th:src="${book.bookImage}">
             </div>
-            <a th:href="@{/books/{title}(title=${book.bookTitle})}">
-                <button>View</button>
+            <div class="book-info">
+                <div class="book-info-text">
+                    <h4 th:text="${book.bookTitle}"></h4>
+                    <span>
+                        <i class="fas fa-star"></i>
+                        <b th:text="${book.bookRating} + '&nbsp;&nbsp;'"></b>
+                    </span>
+                    <a th:text="${book.bookAuthor}" th:href="@{/books/(search=${book.bookAuthor})}"></a>
+                    <span th:text="' | '"></span>
+                    <a th:text="${book.bookCategory}" th:href="@{/books/(search=${book.bookCategory})}"></a>
+                    <br>
+                    <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'COMMA')}"></b>
+                </div>
+                <a th:href="@{/books/{title}(title=${book.bookTitle})}">
+                    <button>View</button>
+                </a>
+            </div>
+        </div>
+        <br>
+        <div class="pagination-button-row" th:if="${books.size() > 0}">
+            <a th:href="@{/books/(page=1,sort=${sort},order=${order})}" class="first-button">
+                <button>
+                    <i class="fas fa-step-backward"></i>
+                </button>
+            </a>
+            <a th:text="'1'" th:if="${page != 1 && page - 1 != 1 && page - 2 != 1}" th:href="@{/books/(search=${search},page=1,sort=${sort},order=${order})}"></a>
+            <span th:if="${page != 1 && page - 1 != 1 && page - 2 != 1}">. .</span>
+            <a th:text="${page - 1}" th:if="${page != 1}" th:href="@{/books/(search=${search},page=${page - 1},sort=${sort},order=${order})}"></a>
+            <a th:text="${page}" th:href="@{/books/(search=${search},page=${page},sort=${sort},order=${order})}" class="current-page"></a>
+            <a th:text="${page + 1}" th:if="${page != lastPage}" th:href="@{/books/(search=${search},page=${page + 1},sort=${sort},order=${order})}"></a>
+            <span th:if="${page != lastPage && page + 1 != lastPage && page + 2 != lastPage}">. .</span>
+            <a th:text="${lastPage}" th:if="${page != lastPage && page + 1 != lastPage && page + 2 != lastPage}" th:href="@{/books/(search=${search},page=${lastPage},sort=${sort},order=${order})}"></a>
+            <a th:href="@{/books/(search=${search},page=${lastPage},sort=${sort},order=${order})}">
+                <button>
+                    <i class="fas fa-step-forward"></i>
+                </button>
             </a>
         </div>
     </div>
-    <br>
-    <div class="pagination-button-row" th:if="${books.size() > 0}">
-        <a th:href="@{/books/(page=1,sort=${sort},order=${order})}" class="first-button">
-            <button>
-                <i class="fas fa-step-backward"></i>
-            </button>
-        </a>
-        <a th:text="${page - 1}" th:if="${page != 1}" th:href="@{/books/(search=${search},page=${page - 1},sort=${sort},order=${order})}"></a>
-        <a th:text="${page}" th:href="@{/books/(search=${search},page=${page},sort=${sort},order=${order})}" class="current-page"></a>
-        <a th:text="${page + 1}" th:if="${page != lastPage}" th:href="@{/books/(search=${search},page=${page + 1},sort=${sort},order=${order})}"></a>
-        <a th:href="@{/books/(search=${search},page=${lastPage},sort=${sort},order=${order})}">
-            <button>
-                <i class="fas fa-step-forward"></i>
-            </button>
-        </a>
-    </div>
-</div>
 </body>
 </html>
+<!-- TODO: improve pagination UI-->

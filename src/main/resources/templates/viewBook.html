@@ -30,7 +30,12 @@
     <img th:src="${book.bookImage}" class="view-book-image">
     <div class="book-details-container">
         <h2 class="book-title" th:text="${book.bookTitle}"></h2>
-        <h5 th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}"></h5>
+        <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="font-size: 2rem;"></b>
+        <br>
+        <span style="margin-bottom: 5px">
+            <i class="fas fa-star" style="font-size: 1.2rem"></i>
+            <span th:text="${book.bookRating} + ' | Sold: ' + ${sold}"></span>
+        </span>
         <div>Written by
             <a th:href="@{/books/(search=${book.bookAuthor})}" th:text="' ' + ${book.bookAuthor}" class="small-link"></a>
         </div>
