@@ -7,12 +7,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
     <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="css/style.css" type="text/css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 </head>
 <body onload="">
+    <ul>
+        <li><a th:href="@{/admin/order}">Orders</a></li>
+        <li><a th:href="@{/admin/books}">Books</a></li>
+    </ul>
     <h2>
         Bookline - View All Books
     </h2>
+    <div class="search-bar" style="margin-bottom: 25px">
+        <form th:action="@{/admin/books/}">
+            <input type="text" th:value="${search}" name="search" placeholder="Search book by title, author or genre" style="max-width: 60%">
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+    <br>
     <a th:href="@{/admin/books/add}" style="float: right">
         <button>Add new book</button>
     </a>
@@ -59,6 +71,24 @@
         </tr>
     </table>
     <br>
-
+    <div class="pagination-button-row" th:if="${books.size() > 0}">
+        <a th:href="@{/books/(page=1,sort=${sort},order=${order})}" class="first-button">
+            <button>
+                <i class="fas fa-step-backward"></i>
+            </button>
+        </a>
+        <a th:text="'1'" th:if="${page != 1 && page - 1 != 1 && page - 2 != 1}" th:href="@{/admin/books/(search=${search},page=1,sort=${sort},order=${order})}"></a>
+        <span th:if="${page != 1 && page - 1 != 1 && page - 2 != 1}">. .</span>
+        <a th:text="${page - 1}" th:if="${page != 1}" th:href="@{/admin/books/(search=${search},page=${page - 1},sort=${sort},order=${order})}"></a>
+        <a th:text="${page}" th:href="@{/admin/books/(search=${search},page=${page},sort=${sort},order=${order})}" class="current-page"></a>
+        <a th:text="${page + 1}" th:if="${page != lastPage}" th:href="@{/admin/books/(search=${search},page=${page + 1},sort=${sort},order=${order})}"></a>
+        <span th:if="${page != lastPage && page + 1 != lastPage && page + 2 != lastPage}">. .</span>
+        <a th:text="${lastPage}" th:if="${page != lastPage && page + 1 != lastPage && page + 2 != lastPage}" th:href="@{/admin/books/(search=${search},page=${lastPage},sort=${sort},order=${order})}"></a>
+        <a th:href="@{/admin/books/(search=${search},page=${lastPage},sort=${sort},order=${order})}">
+            <button>
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </a>
+    </div>
 </body>
 </html>

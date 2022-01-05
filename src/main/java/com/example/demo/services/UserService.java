@@ -2,8 +2,6 @@ package com.example.demo.services;
 
 import com.example.demo.controller.utils.AESEncryption;
 import com.example.demo.controller.utils.TimeHelper;
-import com.example.demo.models.Book;
-import com.example.demo.models.Cart;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
 import org.apache.http.HttpHost;

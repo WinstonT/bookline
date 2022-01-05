@@ -54,9 +54,12 @@ td p{
 }
 
 .main-content{
-    left: 240px;
+    float: left;
+    left: 260px;
     margin-left: 100px;
     padding-left: 20px;
+    width: 60%;
+    display: inline-block;
 }
 
 .book-card{

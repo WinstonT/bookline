@@ -5,9 +5,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 
-import java.nio.charset.Charset;
-import java.util.Random;
-
 @Controller
 public class EmailSender {
 

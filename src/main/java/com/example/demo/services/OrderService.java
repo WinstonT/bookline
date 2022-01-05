@@ -4,7 +4,6 @@ import com.example.demo.models.Book;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Order;
 import com.example.demo.repositories.OrderRepository;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.update.UpdateRequest;

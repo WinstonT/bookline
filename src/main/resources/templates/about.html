@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookline</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+</head>
+<body>
+<img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px;">
+<ul>
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/books}">Browse</a></li>
+    <li><a th:href="@{/about}">About</a></li>
+    <li th:if="${auth != null}" class="float-right-nav">
+        <a th:href="@{/profile/my_account}">Profile</a>
+    </li>
+    <li th:if="${auth != null}" class="float-right-nav">
+        <a th:href="@{/Cart}">Cart</a>
+    </li>
+    <li th:if="${auth == null}" class="float-right-nav">
+        <a th:href="@{/login}">Login</a>
+    </li>
+</ul>
+<div class="content">
+    <h3>
+        About
+    </h3>
+    <div id="#about">
+        <h5>
+            About bookline
+        </h5>
+        <p>
+            bookline is a online bookstore with more than 1000 books available. bookline offers
+            a large variety of books from fiction to poetry to history books. The bookline
+            website designed to be easy to use and allows customers to browse and select books
+            efficiently and conveniently.
+        </p>
+    </div>
+    <div id="how">
+        <h4>
+            How to Order
+        </h4>
+        <h5>1. Login or create an account</h5>
+        <p>
+            To access bookline's full features, click <a th:href="@{/register}">here</a> to create an account.
+        </p>
+        <h5>2. Add book to cart</h5>
+        <p>
+            Press the add to cart button on the product page to add a book to your cart.
+        </p>
+        <h5>3. Proceed to check out</h5>
+        <p>
+            Check cart before checking out. ANy confirmed orders cannot be refunded.
+            Enter your shipping address, payment method and press the submit button to confirm
+            your order.
+        </p>
+        <h5>4. Confirm order</h5>
+        <p>
+            Once your order is confirmed, please wait for your order to be deliverd. Thank you
+            for shopping with bookline.
+        </p>
+    </div>
+</div>
+</body>
+</html>

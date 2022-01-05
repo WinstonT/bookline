@@ -3,10 +3,6 @@ package com.example.demo.controller.mvc;
 import com.example.demo.controller.utils.BookRecommendHelper;
 import com.example.demo.controller.utils.Session;
 import com.example.demo.models.Book;
-import com.example.demo.services.BookService;
-import com.example.demo.services.PaginationService;
-import com.example.demo.services.UserService;
-import org.apache.lucene.analysis.CharArrayMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class HomeController {

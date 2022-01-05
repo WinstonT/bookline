@@ -3,7 +3,6 @@ package com.example.demo.controller.mvc;
 import com.example.demo.controller.utils.Session;
 import com.example.demo.models.Cart;
 import com.example.demo.services.BookService;
-import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +17,6 @@ public class ViewCartController {
 
     @Autowired
     private BookService bookService;
-
-    @Autowired
-    private UserService userService;
 
     @GetMapping(value = "/cart")
     public String getCart(Model model){
@@ -47,7 +43,6 @@ public class ViewCartController {
 
     @PostMapping(value = "/cart")
     public String getCart(@ModelAttribute("cartList") List<Cart> cartList){
-        System.out.println("//" + cartList);
         return "checkout";
     }
 

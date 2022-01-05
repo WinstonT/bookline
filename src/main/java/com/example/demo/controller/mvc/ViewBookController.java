@@ -49,6 +49,7 @@ public class ViewBookController {
             model.addAttribute("bookInCart", 0);
             model.addAttribute("bookInWishlist", false);
         }
+        model.addAttribute("auth", Session.getSession());
         return "viewBook";
     }
 

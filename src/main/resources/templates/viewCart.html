@@ -15,12 +15,12 @@
     <ul>
         <li><a th:href="@{/}">Home</a></li>
         <li><a th:href="@{/books}">Browse</a></li>
-        <li><a href="#">About</a></li>
+        <li><a th:href="@{/about}">About</a></li>
         <li th:if="${auth != null}" class="float-right-nav">
             <a th:href="@{/profile/my_account}">Profile</a>
         </li>
         <li th:if="${auth != null}" class="float-right-nav">
-            <a th:href="@{/Cart}"></a>
+            <a th:href="@{/Cart}">Cart</a>
         </li>
         <li th:if="${auth == null}" class="float-right-nav">
             <a th:href="@{/login}">Login</a>
