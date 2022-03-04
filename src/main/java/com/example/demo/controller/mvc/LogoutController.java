@@ -11,6 +11,6 @@ public class LogoutController {
     public String logout(){
         Session.getSession().setAuthenticated(false);
         Session.setSession(null);
-        return "login";
+        return "redirect:/login";
     }
 }
