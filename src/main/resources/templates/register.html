@@ -13,7 +13,7 @@
         <h2>
             Sign Up
         </h2>
-        <p class="error-space" id="error" th:if="${message.getPosition() == 1}" th:text="${message.getText()}"></p>
+        <p class="error-message" th:if="${message != null && !message.isEmpty()}" th:text="${message}"></p>
         <form method="post" th:action="@{/register}" th:object="${user}">
             <input type="text" th:field="*{userName}" placeholder="Full Name">
             <input type="email" th:field="*{userEmail}" placeholder="Email Address">

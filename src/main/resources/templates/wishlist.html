@@ -39,8 +39,8 @@
                 <th>
                     Title
                 </th>
-                <th style="visibility: hidden">
-                    Title
+                <th th:text="' '">
+
                 </th>
                 <th>
                     Author
@@ -48,11 +48,14 @@
                 <th>
                     Price
                 </th>
+                <th>
+                    Action
+                </th>
             </tr>
             <tr th:each="book : ${books}">
                 <td>
                     <a th:href="@{/books/{title}(title=${book.getBookTitle()})}">
-                        <img th:src="${book.bookImage}" >
+                        <img th:src="${book.bookImage}" style="height: 70px">
                     </a>
                 </td>
                 <td>

@@ -33,7 +33,7 @@ public class ForgetPasswordController {
         System.out.println(newPassword);
         try{
             userService.updateUserDetails(userService.findUserByEmail(email).get(0), "password", aesEncryption.encrypt(newPassword, "secret_key"));
-            emailSender.sendMail(email, newPassword);
+            emailSender.sendPasswordResetMail(email, newPassword);
             return "redirect:/password_change_success";
         }
         catch (IndexOutOfBoundsException e){

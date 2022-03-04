@@ -25,15 +25,12 @@ public class HistoryController {
             return "login";
         }
         try{
-            List<Order> orderList = orderService.getCompletedOrdersByCustomer(Session.getSession().getId());
+            List<Order> orderList = orderService.getOrdersByCustomer(Session.getSession().getId());
             orderList = orderList.stream().sorted(Comparator.comparing(Order::getTransactionDate).reversed()).collect(Collectors.toList());
             model.addAttribute("orderList", orderList);
             return "history";
         }
-        catch (NullPointerException e){
-            return "redirect:/login";
-        }
-        catch (TemplateInputException e){
+        catch (NullPointerException | TemplateInputException e){
             return "redirect:/login";
         }
     }

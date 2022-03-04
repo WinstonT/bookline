@@ -1,15 +1,106 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Bookline</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
     <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 </head>
-<body>
-
-
+<body  class="content">
+<ul>
+    <li><a th:href="@{/admin/order}">Orders</a></li>
+    <li><a th:href="@{/admin/books}">Books</a></li>
+    <li class="float-right-nav"><a  th:href="@{/logout}">Logout</a></li>
+</ul>
+<br>
+<div>
+    <img th:src="${book.bookImage}" class="view-book-image">
+    <div class="book-details-container">
+        <h2 class="book-title" th:text="${book.bookTitle}"></h2>
+        <b th:text="'Rp. ' + ${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}" style="font-size: 2rem;"></b>
+        <br>
+        <span style="margin-bottom: 5px">
+            <i class="fas fa-star" style="font-size: 1.2rem"></i>
+            <span th:text="${book.bookRating} + ' | Sold: ' + ${sold}"></span>
+        </span>
+        <div>Written by
+            <a th:href="@{/books/(search=${book.bookAuthor})}" th:text="' ' + ${book.bookAuthor}" class="small-link"></a>
+        </div>
+        <div>Category:
+            <a th:href="@{books/(search=${book.bookCategory})}" th:text="' ' + ${book.bookCategory}" class="small-link"></a>
+        </div>
+        <br>
+        <div>
+            <a th:href="@{/admin/books/edit/{title}(title=${book.getBookTitle()})}">
+                <button class="button-large">
+                    <i class='fas fa-pencil-alt'></i>
+                </button>
+            </a>
+            <a th:href="@{/admin/books/delete/{isbn}(isbn=${book.getBookIsbn()})}">
+                <button class="button-large">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </a>
+        </div>
+        <br><br>
+        <strong>Description</strong>
+        <p th:text="${book.bookDescription}"></p>
+        <strong>Book details</strong>
+        <table class="short-table">
+            <tr>
+                <td>
+                    <span>
+                        <i class="far fa-calendar-alt"></i>
+                        Release year
+                    </span>
+                </td>
+                <td th:text="${book.yearPublished}"></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        <i class="fas fa-barcode"></i>
+                         ISBN-13
+                    </span>
+                </td>
+                <td th:text="${book.bookIsbn}"></td>
+            </tr>
+            <tr>
+                <td>
+                    <span>
+                        <i class="fas fa-book-open"></i>
+                        Pages
+                    </span>
+                </td>
+                <td th:text="${book.bookPages}"></td>
+            </tr>
+        </table>
+        <br>
+        <div style="font-size: 3.0rem">
+            Reviews
+        </div>
+        <span th:if="${reviewList.size() == 0}">No reviews posted yet</span>
+        <div th:if="${reviewList.size() > 0}" style="font-size: 2.3rem">
+            <span>Rating: &#11088;</span>
+            <span th:text="${avgScore} + '/5'"></span>
+        </div>
+        <br>
+        <div th:if="${reviewList.size() > 0}">
+            <div th:each="review : ${reviewList}">
+                <b th:text="${review.userName}"></b>
+                <span th:each="i : ${#numbers.sequence(1, review.getScore(), 1)}">&#9733;</span>
+                <div th:text="${review.reviewText}"></div>
+                <small th:text="${#temporals.format(review.reviewDate, 'dd-MMM-yyyy')}"></small>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
 </body>
 </html>

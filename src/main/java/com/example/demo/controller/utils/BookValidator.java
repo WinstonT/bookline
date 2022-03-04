@@ -19,6 +19,13 @@ public class BookValidator {
         }
     }
 
+    private boolean checkImage(String img){
+        if(img.endsWith(".jpg") || img.endsWith(".png") || img.endsWith(".jpeg")){
+            return true;
+        }
+        return false;
+    }
+
     public Message validateBook(Book book){
 
         String text = "";
@@ -40,7 +47,7 @@ public class BookValidator {
             text = "Book description cannot be empty";
             pos = 4;
         }
-        else if(!book.getBookImage().contains("http://") && !book.getBookImage().isEmpty()){
+        else if(!book.getBookImage().startsWith("http") && book.getBookImage().isEmpty() && !checkImage(book.getBookImage())){
             text = "Book image must be image URL";
             pos = 5;
         }
@@ -52,12 +59,12 @@ public class BookValidator {
             text = "Book ISBN must contain 13 digits";
             pos = 6;
         }
-        else if(!checkString(book.getYearPublished())){
-            text = "Book year must be a number";
-            pos = 7;
-        }
         else if(book.getYearPublished().isEmpty()){
             text = "Year published cannot be empty";
+            pos = 7;
+        }
+        else if(!checkString(book.getYearPublished())){
+            text = "Book year must be a number";
             pos = 7;
         }
         else if(Integer.parseInt(book.getYearPublished()) < 1900 || Integer.parseInt(book.getYearPublished()) > timeHelper.getCurrentYear()){
@@ -76,7 +83,11 @@ public class BookValidator {
             text = "Book pages must be greater than 0";
             pos = 8;
         }
-        else if(book.getBookPrice() <= 0){
+        else if(book.getBookPages().isEmpty()){
+            text = "Book price cannot be empty";
+            pos = 9;
+        }
+        else if((book.getBookPrice()) <= 0){
             text = "Book price must be greater than 0";
             pos = 9;
         }

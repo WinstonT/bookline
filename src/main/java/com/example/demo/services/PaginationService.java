@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.example.demo.models.Book;
 import org.elasticsearch.common.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -23,11 +24,19 @@ public class PaginationService {
         List<Book> bookList = new ArrayList<>();
         Map<String, List<Book>>  map = new HashMap<>();
         int totalResults = 0;
-        if(query != null && !query.isEmpty()) {
-            bookList.addAll(bookService.findBookContaining(query));
-            bookList.addAll(bookService.findBookByAuthor(query));
-            bookList.addAll(bookService.findBookByCategory(query));
-            totalResults = bookList.size();
+        if(query != null && !query.isEmpty()){
+            try{
+                bookList.addAll(bookService.findBookContaining(query));
+            }
+            catch (InvalidDataAccessApiUsageException e){
+                bookList.addAll(bookService.findBook(query));
+            }
+            finally {
+                bookList.addAll(bookService.findBookByAuthor(query));
+                bookList.addAll(bookService.findBookByCategory(query));
+                bookList = bookList.stream().distinct().collect(Collectors.toList());
+                totalResults = bookList.size();
+            }
         }
         else {
             bookList = bookService.getAllBooks();
@@ -37,6 +46,9 @@ public class PaginationService {
         }
         if (order == null){
             order = "desc";
+        }
+        if(totalResults > 1){
+            totalResults = totalResults - 1;
         }
         String lastPage = getLastPageIndex(bookList);
         String key = "" + lastPage + "_" + totalResults;
@@ -62,7 +74,7 @@ public class PaginationService {
     }
 
     public List<Book> checkEndPage(List<Book> bookList, int page){
-        if(bookList.size() == 1){
+        if(bookList.size() == 1 || bookList.size() == 0){
             return bookList;
         }
         if(Math.floor(bookList.size() / PAGE_SIZE) * PAGE_SIZE != bookList.size() && Math.floor(bookList.size() / PAGE_SIZE) + 1 == page){

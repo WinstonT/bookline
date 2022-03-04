@@ -9,10 +9,11 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
     <link rel="stylesheet" th:href="@{/css/header.css}" href="css/style.css" type="text/css">
 </head>
-<body>
+<body class="content">
 <ul>
     <li><a th:href="@{/admin/order}">Orders</a></li>
     <li><a th:href="@{/admin/books}">Books</a></li>
+    <li class="float-right-nav"><a  th:href="@{/logout}">Logout</a></li>
 </ul>
 <h2>
     Bookline - Dashboard
@@ -47,7 +48,7 @@
                 <div th:text="${book.book.bookTitle} + ' x' + ${book.quantity}"></div>
             </span>
         </td>
-        <td th:text="${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')}"></td>
+        <td th:text="'Rp. '+${#numbers.formatDecimal(order.totalPrice, 0, 'POINT', 0, 'POINT')}"></td>
         <td>
             <a th:href="@{/admin/order/{id}(id=${order.id})}">
                 <button>

@@ -15,7 +15,7 @@
         </h2>
         <form method="post" th:action="@{/login}" th:object="${user}">
             <input type="text" th:field="${user.userEmail}" placeholder="Email">
-            <p th:if="${position == 1}" class="error-message" th:text="${message}"></p>
+            <p th:if="${!message.isEmpty() && message != null}" class="error-message" th:text="${message}"></p>
             <input type="password" th:field="${user.password}" placeholder="Password">
             <a th:href="@{/forgot_password}" class="link-redirect">
                 <small style="float: right">
@@ -23,7 +23,6 @@
                     <br><br>
                 </small>
             </a>
-            <p th:if="${position == 2}" class="error-message" th:text="${message}"></p>
             <input type="submit" value="Enter">
         </form>
         <hr>

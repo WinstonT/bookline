@@ -37,11 +37,12 @@ public class ChangeQuantityController {
             }
         }
         model.addAttribute("error", "Book not found");
+        model.addAttribute("auth", Session.getSession());
         return "changeQuantity";
     }
 
     @PostMapping(value = "/cart/change_quantity")
-    public String changeQuantity(@ModelAttribute("cart") Cart cart, Model model) {
+    public String changeQuantity(@ModelAttribute("cart") Cart cart) {
         userService.changeCartItemQuantity(Session.getSession(), cart.getBook().getBookTitle(), cart.getQuantity());
         return "redirect:/cart";
     }

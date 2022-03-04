@@ -4,12 +4,10 @@ import com.example.demo.models.Book;
 import com.example.demo.models.Cart;
 import com.example.demo.models.User;
 import com.example.demo.repositories.BookRepository;
-import org.apache.http.HttpHost;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,21 +19,18 @@ import java.util.List;
 @Service
 public class BookService {
 
-    RestHighLevelClient client = new RestHighLevelClient(
-            RestClient.builder(
-                    new HttpHost("localhost", 9200, "http")
-            )
-    );
-
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private RestHighLevelClient client;
 
     public Book findBookById(String id){
         return bookRepository.findById(id).get();
     }
 
     public List<Book> findBook(String bookTitle){
-        return bookRepository.findByBookTitle(bookTitle);
+        return bookRepository.findByBookTitle(bookTitle.replace("%20", " "));
     }
 
     public List<Book> findBookByAuthor(String author){
@@ -102,9 +97,5 @@ public class BookService {
             total = total + cart.getBook().getBookPrice() * cart.getQuantity();
         }
         return total;
-    }
-
-    public void deleteAll(){
-        bookRepository.deleteAll();
     }
 }

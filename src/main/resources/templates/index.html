@@ -10,46 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 </head>
-<body onload="toggleCategory(1)">
-    <script type="text/javascript">
-        function toggleCategory(category){
-            if(category === 1){
-                document.getElementsByClassName("product-card fiction-books").style.display = "block";
-                document.getElementsByClassName("product-card poetry-books").style.display = "none";
-                document.getElementsByClassName("product-card cooking-books").style.display = "none";
-                document.getElementsByClassName("product-card philosophy-books").style.display = "none";
-                document.getElementsByClassName("product-card comic-books").style.display = "none";
-            }
-            if(category === 2){
-                document.getElementsByClassName("fiction-books").style.display = "none";
-                document.getElementsByClassName("poetry-books").style.display = "block";
-                document.getElementsByClassName("cooking-books").style.display = "none";
-                document.getElementsByClassName("philosophy-books").style.display = "none";
-                document.getElementsByClassName("comic-books").style.display = "none";
-            }
-            if(category === 3){
-                document.getElementsByClassName("fiction-books").style.display = "none";
-                document.getElementsByClassName("poetry-books").style.display = "none";
-                document.getElementsByClassName("cooking-books").style.display = "block";
-                document.getElementsByClassName("philosophy-books").style.display = "none";
-                document.getElementsByClassName("comic-books").style.display = "none";
-            }
-            if(category === 4){
-                document.getElementsByClassName("fiction-books").style.display = "none";
-                document.getElementsByClassName("poetry-books").style.display = "none";
-                document.getElementsByClassName("cooking-books").style.display = "none";
-                document.getElementsByClassName("philosophy-books").style.display = "block";
-                document.getElementsByClassName("comic-books").style.display = "none";
-            }
-            if(category === 5){
-                document.getElementsByClassName("fiction-books").style.display = "none";
-                document.getElementsByClassName("poetry-books").style.display = "none";
-                document.getElementsByClassName("cooking-books").style.display = "none";
-                document.getElementsByClassName("philosophy-books").style.display = "none";
-                document.getElementsByClassName("comic-books").style.display = "block";
-            }
-        }
-    </script>
+<body>
     <img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px;">
     <ul>
         <li><a th:href="@{/}">Home</a></li>
@@ -59,7 +20,7 @@
             <a th:href="@{/profile/my_account}">Profile</a>
         </li>
         <li th:if="${auth != null}" class="float-right-nav">
-            <a th:href="@{/Cart}">Cart</a>
+            <a th:href="@{/cart}">Cart</a>
         </li>
         <li th:if="${auth == null}" class="float-right-nav">
             <a th:href="@{/login}">Login</a>

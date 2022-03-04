@@ -43,7 +43,7 @@ public class BrowseBooksController {
         model.addAttribute("page", pageNumber);
         model.addAttribute("sort", sort);
         model.addAttribute("order", order);
-        model.addAttribute("search", query);
+        model.addAttribute("search", query.replace("%20", " "));
         model.addAttribute("attr", Integer.parseInt(split[0]));
         model.addAttribute("totalResults", Integer.parseInt(split[2]));
         model.addAttribute("auth", Session.getSession());

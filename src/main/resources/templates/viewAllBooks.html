@@ -10,11 +10,12 @@
     <link rel="stylesheet" th:href="@{/css/header.css}" href="css/style.css" type="text/css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 </head>
-<body onload="">
-    <ul>
-        <li><a th:href="@{/admin/order}">Orders</a></li>
-        <li><a th:href="@{/admin/books}">Books</a></li>
-    </ul>
+<body class="content">
+<ul>
+    <li><a th:href="@{/admin/order}">Orders</a></li>
+    <li><a th:href="@{/admin/books}">Books</a></li>
+    <li class="float-right-nav"><a  th:href="@{/logout}">Logout</a></li>
+</ul>
     <h2>
         Bookline - View All Books
     </h2>
@@ -49,8 +50,8 @@
         <tr th:each="book : ${books}">
             <td th:text="${book.getBookTitle()}"></td>
             <td th:text="${book.getBookAuthor()}"></td>
-            <td th:text="${book.getBookPrice()}"></td>
-            <td th:text="${book.getBookRating()}"></td>
+            <td th:text="'Rp. '+${#numbers.formatDecimal(book.bookPrice, 0, 'POINT', 0, 'POINT')}"></td>
+            <td th:text="${#numbers.formatDecimal(book.getBookRating(), 0, 'POINT', 2, 'POINT')}"></td>
             <td class="button-arrange">
                 <a th:href="@{/admin/books/view/{title}(title=${book.getBookTitle()})}">
                     <button>
@@ -72,7 +73,7 @@
     </table>
     <br>
     <div class="pagination-button-row" th:if="${books.size() > 0}">
-        <a th:href="@{/books/(page=1,sort=${sort},order=${order})}" class="first-button">
+        <a th:href="@{/admin/books/(page=1,sort=${sort},order=${order})}" class="first-button">
             <button>
                 <i class="fas fa-step-backward"></i>
             </button>

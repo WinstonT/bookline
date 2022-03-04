@@ -1,5 +1,6 @@
 package com.example.demo.controller.mvc;
 
+import com.example.demo.controller.utils.EmailSender;
 import com.example.demo.controller.utils.Session;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Order;
@@ -27,6 +28,9 @@ public class CheckoutController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private EmailSender emailSender;
 
     @GetMapping(value = "/checkout")
     public String checkout(Model model){
@@ -61,6 +65,7 @@ public class CheckoutController {
         for (Cart cart: cartList){
             userService.deleteCartItem(Session.getSession(), cart.getBook().getBookTitle());
         }
+        emailSender.sendOrderMail(Session.getSession().getUserEmail(), cartList, order);
         return "redirect:/order_success";
     }
 }

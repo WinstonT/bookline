@@ -15,37 +15,36 @@
 
     <form th:action="@{/admin/books/add}" method="post" th:object="${book}">
         <label>Title</label><input type="text" th:field="*{bookTitle}">
-        <p th:if="${position == 1}" class="error-message">Invalid Title</p>
+        <p th:if="${position == 1}" class="error-message" th:text="${error}"></p>
         <br>
         <label>Author</label><input type="text" th:field="*{bookAuthor}">
-        <p th:if="${position == 2}" class="error-message">Invalid Author</p>
+        <p th:if="${position == 2}" class="error-message" th:text="${error}"></p>
         <br>
         <label>Category</label><input type="text" th:field="*{bookCategory}">
-        <p th:if="${position == 3}" class="error-message">Invalid Category</p>
+        <p th:if="${position == 3}" class="error-message" th:text="${error}"></p>
         <br>
         <label>Description</label><input type="text" th:field="*{bookDescription}">
-        <p th:if="${position == 4}" class="error-message">Invalid Description</p>
+        <p th:if="${position == 4}" class="error-message" th:text="${error}"></p>
         <br>
         <label>Cover Image</label><input type="text" th:field="*{bookImage}">
-        <p th:if="${position == 5}" class="error-message">Invalid Cover Image</p>
+        <p th:if="${position == 5}" class="error-message" th:text="${error}"></p>
         <br>
         <label>ISBN</label><input type="text" th:field="*{bookIsbn}" placeholder="ISBN13">
-        <p th:if="${position == 6}" class="error-message">Invalid ISBN</p>
+        <p th:if="${position == 6}" class="error-message" th:text="${error}"></p>
         <br>
         <label>Year Published</label><input type="text" th:field="*{yearPublished}">
-        <p th:if="${position == 7}" class="error-message">Invalid Year Published</p>
+        <p th:if="${position == 7}" class="error-message" th:text="${error}"></p>
         <br>
         <label>Number of Pages</label><input type="text" th:field="*{bookPages}">
-        <p th:if="${position == 8}" class="error-message">Invalid Number of Pages</p>
+        <p th:if="${position == 8}" class="error-message" th:text="${error}"></p>
         <br>
-        <label>Price</label><input type="text" th:field="*{bookPrice}">
-        <p th:if="${position == 9}" class="error-message">Invalid Price</p>
+        <label>Price</label><input type="number" th:field="*{bookPrice}">
+        <p th:if="${position == 9}" class="error-message"  th:text="${error}"></p>
         <br>
-        <label>Rating</label><input type="text" th:field="*{bookRating}">
-        <p th:if="${position == 10}" class="error-message">Invalid Rating</p>
+        <label>Rating</label><input type="number" th:field="*{bookRating}">
+        <p th:if="${position == 10}" class="error-message" th:text="${error}"></p>
         <br>
         <input type="submit" value="Submit">
     </form>
-
 </body>
 </html>

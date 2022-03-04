@@ -48,12 +48,10 @@ public class BookRecommendHelper {
                 }
             }
         }
-        else{
-            recommendedBooks.addAll(paginationService.getPage(null, "rating", "desc", 1).entrySet().iterator().next().getValue());
-            recommendedBooks.addAll(paginationService.getPage(null, "rating", "desc", 2).entrySet().iterator().next().getValue());
-            recommendedBooks.addAll(paginationService.getPage(null, "rating", "desc", 3).entrySet().iterator().next().getValue());
-            recommendedBooks.addAll(paginationService.getPage(null, "rating", "desc", 4).entrySet().iterator().next().getValue());
-        }
+        recommendedBooks.addAll(paginationService.getPage(null, "rating", "desc", 1).entrySet().iterator().next().getValue());
+        recommendedBooks.addAll(paginationService.getPage(null, "rating", "desc", 2).entrySet().iterator().next().getValue());
+        recommendedBooks.addAll(paginationService.getPage(null, "rating", "desc", 3).entrySet().iterator().next().getValue());
+        recommendedBooks.addAll(paginationService.getPage(null, "rating", "desc", 4).entrySet().iterator().next().getValue());
         Collections.shuffle(recommendedBooks);
         return recommendedBooks.subList(0, 8);
     }
@@ -73,7 +71,7 @@ public class BookRecommendHelper {
         if(bestSellers.size() < 8){
             bestSellers.addAll(paginationService.getPage(null, "rating", "desc", 1).entrySet().iterator().next().getValue().subList(0, 8 - bestSellers.size()));
         }
-        return bestSellers;
+        return bestSellers.subList(0, 8);
     }
 
     public List<Book> getRecentlyAddedBooks(){

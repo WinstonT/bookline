@@ -1,6 +1,7 @@
 package com.example.demo.controller.mvc;
 
 import com.example.demo.controller.utils.BookValidator;
+import com.example.demo.controller.utils.Session;
 import com.example.demo.models.Book;
 import com.example.demo.models.Message;
 import com.example.demo.services.BookService;
@@ -60,7 +61,7 @@ public class EditBookController {
                 bookService.updateBook(oldBook, "yearPublished", book.getYearPublished());
             }
 
-            return "redirect:/admin/books";
+            return "redirect:" + Session.lastPage;
         }
 
     }

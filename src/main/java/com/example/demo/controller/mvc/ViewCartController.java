@@ -18,7 +18,7 @@ public class ViewCartController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping(value = "/cart")
+    @GetMapping(value = {"/cart", "/Cart"})
     public String getCart(Model model){
         model.addAttribute("auth", Session.getSession());
         try{

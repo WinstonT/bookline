@@ -26,40 +26,40 @@ public class LoginController {
             return "redirect:/home";
         }
         model.addAttribute("user", new User());
+        model.addAttribute("message", "");
         return "login";
     }
 
     @PostMapping(value = "/login")
     public String login(@ModelAttribute("user") User user, Model model){
+        User verifiedUser = null;
         if(user.getUserEmail().isEmpty()){
             model.addAttribute("message", "Email not filled");
-            model.addAttribute("position", 1);
         }
         else if(user.getPassword().isEmpty()){
             model.addAttribute("message", "Password not filled");
-            model.addAttribute("position", 2);
         }
         else{
-            User verifiedUser = userService.findUserByEmail(user.getUserEmail()).get(0);
-            if(verifiedUser == null){
-                model.addAttribute("message", "Email not found");
-                model.addAttribute("position", 1);
+            try {
+                verifiedUser = userService.findUserByEmail(user.getUserEmail()).get(0);
+            }
+            catch (IndexOutOfBoundsException e){
+                model.addAttribute("message", "Email not registered");
+                return "login";
+            }
+            String decoded = aesEncryption.decrypt(verifiedUser.getPassword(), "secret_key");
+            if(user.getPassword().equals(decoded)){
+                Session.setSession(verifiedUser);
+                Session.getSession().setAuthenticated(true);
+                if(Session.getSession().getUserRole().equals("admin")){
+                    return "redirect:/admin/dashboard";
+                }
+                return "redirect:/home";
             }
             else{
-                String decoded = aesEncryption.decrypt(verifiedUser.getPassword(), "secret_key");
-                if(user.getPassword().equals(decoded)){
-                    Session.setSession(verifiedUser);
-                    Session.getSession().setAuthenticated(true);
-                    if(Session.getSession().getUserRole().equals("admin")){
-                        return "redirect:/admin/dashboard";
-                    }
-                    return "redirect:/home";
-                }
-                else{
-                    model.addAttribute("message", "Incorrect password");
-                    model.addAttribute("position", 2);
-                }
+                model.addAttribute("message", "Incorrect password");
             }
+
         }
         return "login";
     }

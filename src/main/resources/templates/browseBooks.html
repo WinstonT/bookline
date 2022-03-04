@@ -51,7 +51,7 @@
             </select>
         </div>
         <span th:if="${books.isEmpty()}">No search results</span>
-        <span th:if="${!books.isEmpty() && search != null} " th:text="'Displaying ' + ${totalResults} + ' results for ' + '\'' + ${search} + '\''" style="padding-bottom: 20px"></span>
+        <span th:if="${!books.isEmpty() && search != null && !search.isEmpty()} " th:text="'Displaying ' + ${totalResults} + ' results for ' + '\'' + ${search} + '\''" style="padding-bottom: 20px"></span>
         <br><br>
         <div class="wrapper" th:each="book: ${books}">
             <div class="book-image">

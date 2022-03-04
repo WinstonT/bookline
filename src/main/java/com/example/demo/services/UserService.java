@@ -4,12 +4,10 @@ import com.example.demo.controller.utils.AESEncryption;
 import com.example.demo.controller.utils.TimeHelper;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
-import org.apache.http.HttpHost;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,11 +25,8 @@ public class UserService{
     @Autowired
     private AESEncryption aesEncryption;
 
-    RestHighLevelClient client = new RestHighLevelClient(
-            RestClient.builder(
-                    new HttpHost("localhost", 9200, "http")
-            )
-    );
+    @Autowired
+    private RestHighLevelClient client;
 
     public User findUserById(String id){
         List<User> userList = findAllUsers();

@@ -18,11 +18,14 @@
     <li><a th:href="@{/}">Home</a></li>
     <li><a th:href="@{/books}">Browse</a></li>
     <li><a th:href="@{/about}">About</a></li>
-    <li class="float-right-nav">
+    <li th:if="${auth != null}" class="float-right-nav">
         <a th:href="@{/profile/my_account}">Profile</a>
     </li>
     <li th:if="${auth != null}" class="float-right-nav">
         <a th:href="@{/cart}">Cart</a>
+    </li>
+    <li th:if="${auth == null}" class="float-right-nav">
+        <a th:href="@{/login}">Login</a>
     </li>
 </ul>
 <br>
@@ -105,7 +108,7 @@
                 <b th:text="${review.userName}"></b>
                 <span th:each="i : ${#numbers.sequence(1, review.getScore(), 1)}">&#9733;</span>
                 <div th:text="${review.reviewText}"></div>
-                <small th:text="${review.reviewDate}"></small>
+                <small th:text="${#temporals.format(review.reviewDate, 'dd-MMM-yyyy')}"></small>
                 <hr>
             </div>
         </div>

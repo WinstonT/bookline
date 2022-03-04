@@ -34,11 +34,7 @@ td p{
 }
 
 .side-menu{
-    background-color: lightgray;
-    z-index: 1;
-    overflow-x: hidden;
-    padding: 10px 0px;
-    width: 100px;
+    background-color: lightgray; z-index: 1; overflow-x: hidden; padding: 10px 0px; width: 140px; position: fixed;
 }
 
 .side-menu a{
@@ -50,16 +46,12 @@ td p{
 }
 
 .side-menu a:hover{
-    color: #5f2e7d
+    color: #5f2e7d;
+    display: block;
 }
 
 .main-content{
-    float: left;
-    left: 260px;
-    margin-left: 100px;
-    padding-left: 20px;
-    width: 60%;
-    display: inline-block;
+    top: 0; left: 250px; margin-left: 180px; padding-left: 20px;
 }
 
 .book-card{

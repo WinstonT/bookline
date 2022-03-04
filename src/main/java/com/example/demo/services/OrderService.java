@@ -4,12 +4,10 @@ import com.example.demo.models.Book;
 import com.example.demo.models.Cart;
 import com.example.demo.models.Order;
 import com.example.demo.repositories.OrderRepository;
-import org.apache.http.HttpHost;
 import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,11 +24,8 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    RestHighLevelClient client = new RestHighLevelClient(
-            RestClient.builder(
-                    new HttpHost("localhost", 9200, "http")
-            )
-    );
+    @Autowired
+    private RestHighLevelClient client;
 
     public void createOrder(Order order){
         orderRepository.save(order);
@@ -57,6 +52,12 @@ public class OrderService {
     public List<Order> getCompletedOrdersByCustomer(String userId){
         List<Order> orders = orderRepository.findByUserId(userId);
         orders.removeIf(order -> !order.getOrderStatus().equals("Completed"));
+        return orders;
+    }
+
+    public List<Order> getPendingOrdersByCustomer(String userId){
+        List<Order> orders = orderRepository.findByUserId(userId);
+        orders.removeIf(order -> order.getOrderStatus().equals("Completed"));
         return orders;
     }
 
