@@ -54,7 +54,7 @@ public class LoginController {
                 if(Session.getSession().getUserRole().equals("admin")){
                     return "redirect:/admin/dashboard";
                 }
-                return "redirect:/home";
+                return Session.lastPage;
             }
             else{
                 model.addAttribute("message", "Incorrect password");

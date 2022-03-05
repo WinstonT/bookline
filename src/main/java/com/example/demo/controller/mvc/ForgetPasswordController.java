@@ -37,7 +37,7 @@ public class ForgetPasswordController {
             return "redirect:/password_change_success";
         }
         catch (IndexOutOfBoundsException e){
-            return "redirect:/forget_password";
+            return "redirect:/forgot_password";
         }
     }
 }

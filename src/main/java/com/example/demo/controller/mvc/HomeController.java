@@ -19,7 +19,7 @@ public class HomeController {
 
     @GetMapping(value = {"/index", "/", "", "/home"})
     public String home(Model model){
-        List<Book> books = new ArrayList<>();
+        Session.setLastPage("/home");
         model.addAttribute("auth", Session.getSession());
         model.addAttribute("booksForYou", bookRecommendHelper.getRecommendedBooks());
         model.addAttribute("bestSeller", bookRecommendHelper.getBestSellerBook());
@@ -33,9 +33,3 @@ public class HomeController {
         return "index";
     }
 }
-
-/*
-*   Best sellers
-*   Books under 150k
-*   Fiction
-* */

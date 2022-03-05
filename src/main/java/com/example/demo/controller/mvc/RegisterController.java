@@ -64,7 +64,8 @@ public class RegisterController {
                     .userDateOfBirth(LocalDate.parse(date))
                     .build();
             userService.createUserIndex(newUser);
-            return "redirect:/index";
+            Session.setSession(newUser);
+            return "redirect:/home";
         }
         model.addAttribute("user", user);
         return "register";

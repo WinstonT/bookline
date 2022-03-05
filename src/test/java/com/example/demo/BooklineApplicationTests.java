@@ -1,30 +1,30 @@
 package com.example.demo;
 
-import com.example.demo.controller.utils.AESEncryption;
-import com.example.demo.controller.utils.BookDataReader;
-import com.example.demo.models.Book;
-import com.example.demo.models.Review;
-import com.example.demo.models.User;
-import com.example.demo.repositories.ReviewRepository;
-import com.example.demo.services.BookService;
-import com.example.demo.services.OrderService;
-import com.example.demo.services.UserService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-@SpringBootTest
+//import com.example.demo.controller.utils.AESEncryption;
+//import com.example.demo.controller.utils.BookDataReader;
+//import com.example.demo.models.Book;
+//import com.example.demo.models.Review;
+//import com.example.demo.models.User;
+//import com.example.demo.repositories.ReviewRepository;
+//import com.example.demo.services.BookService;
+//import com.example.demo.services.OrderService;
+//import com.example.demo.services.UserService;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//import java.time.LocalDate;
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//@SpringBootTest
 class BooklineApplicationTests {
+
+//    @Autowired
+//    private BookService bookService;
 //
-    @Autowired
-    private BookService bookService;
-//
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 //
 //    @Autowired
 //    private OrderService orderService;
@@ -208,17 +208,17 @@ class BooklineApplicationTests {
 //        System.out.println(bookService.findBookByAuthor("Christopher J. H. Wright"));
 //    }
 
-    @Test
-    public void test(){
-        userService.deleteUser("Ik1pRH4BkATJ8nKx9PVB");
-    }
-
-    @Test
-    public void s(){
+//    @Test
+//    public void test(){
+//        userService.deleteUser("Ik1pRH4BkATJ8nKx9PVB");
+//    }
+//
+//    @Test
+//    public void s(){
 //        String id = userService.findUserByEmail("bob@email.com").get(0).getId();
 //        userService.deleteUser(id); Ik1pRH4BkATJ8nKx9PVB v5pDQ34BZSnczSdsZ8g0
-        for(User u: userService.findAllUsers()){
-            System.out.println(u);
-        }
-    }
+//        for(User u: userService.findAllUsers()){
+//            System.out.println(u);
+//        }
+//    }
 }

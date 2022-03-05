@@ -61,7 +61,6 @@ public class CheckoutController {
         order.setCartItems(cartList);
         order.setTotalPrice(orderService.getOrderTotalPrice(cartList));
         orderService.createOrder(order);
-        System.out.println(order);
         for (Cart cart: cartList){
             userService.deleteCartItem(Session.getSession(), cart.getBook().getBookTitle());
         }

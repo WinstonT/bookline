@@ -21,7 +21,6 @@ public class ViewOrderController {
     @GetMapping(value = "/admin/order/{id}")
     public String viewOrder(@ModelAttribute("id") String orderId, Model model){
         Order order = orderService.findOrderById(orderId);
-        System.out.println(order);
         model.addAttribute("order", order);
         model.addAttribute("user", userService.findUserById(order.getUserId()));
         return "viewOrder";

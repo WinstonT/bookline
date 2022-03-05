@@ -11,6 +11,7 @@ public class AboutController {
     @GetMapping(value = "/about")
     public String viewAbout(Model model){
         model.addAttribute("auth", Session.getSession());
+        Session.setLastPage("/about");
         return "about";
     }
 }

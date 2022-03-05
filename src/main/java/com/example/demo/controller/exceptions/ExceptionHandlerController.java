@@ -23,5 +23,3 @@ public class ExceptionHandlerController implements ErrorController {
         return "notFound";
     }
 }
-
-// TODO exception handling for error 404 and 500

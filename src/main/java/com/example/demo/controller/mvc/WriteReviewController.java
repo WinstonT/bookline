@@ -34,7 +34,6 @@ public class WriteReviewController {
 
     @PostMapping(value = "/books/review")
     public String writeReview(@ModelAttribute("review") Review review){
-        System.out.println(title + review);
         review.setUserName(Session.session.getUserName());
         review.setBookId(bookService.findBook(title).get(0).getId());
         review.setReviewDate(LocalDate.now());
