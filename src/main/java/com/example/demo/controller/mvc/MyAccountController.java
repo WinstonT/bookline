@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
 @Controller
-public class MyAccountController {
+public class    MyAccountController {
 
     @GetMapping(value = "/profile/my_account")
     public String displayMyAccount(Model model){
