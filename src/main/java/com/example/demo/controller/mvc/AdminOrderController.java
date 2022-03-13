@@ -1,7 +1,9 @@
 package com.example.demo.controller.mvc;
 
 import com.example.demo.models.Order;
+import com.example.demo.models.User;
 import com.example.demo.services.OrderService;
+import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +22,18 @@ public class AdminOrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping(value = "/admin/order")
     public String order(Model model){
         List<Order> orderList = orderService.getAllOrders().stream().sorted(Comparator.comparing(Order::getTransactionDate).reversed()).collect(Collectors.toList());
+        List<User> userList = new ArrayList<>();
+        for(Order order: orderList){
+            userList.add(userService.findUserById(order.getUserId()));
+        }
         model.addAttribute("orderList", orderList);
+        model.addAttribute("userList", userList);
         model.addAttribute("query", new Order());
         return "adminOrder";
     }

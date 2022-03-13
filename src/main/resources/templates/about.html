@@ -65,6 +65,18 @@
             for shopping with bookline.
         </p>
     </div>
+    <div>
+        <h4>
+            Feedback
+        </h4>
+        <p>
+            Give us feedback so we can improve our service.
+        </p>
+        <form method="post" th:action="@{/feedback}">
+            <input type="text" name="message">
+            <input type="submit">
+        </form>
+    </div>
 </div>
 </body>
 </html>

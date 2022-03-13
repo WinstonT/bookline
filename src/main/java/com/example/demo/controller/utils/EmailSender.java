@@ -54,4 +54,13 @@ public class EmailSender {
         );
         mailSender.send(mailMessage);
     }
+
+    public void sendFeedbackMail(String emailFrom, String message){
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(emailFrom);
+        mailMessage.setTo("bookline.help@gmail.com");
+        mailMessage.setSubject("Feedback");
+        mailMessage.setText(message);
+        mailSender.send(mailMessage);
+    }
 }

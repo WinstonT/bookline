@@ -46,11 +46,11 @@
             Action
         </th>
     </tr>
-    <tr th:each="order : ${orderList}">
+    <tr th:each="order, count : ${orderList}">
         <td th:text="${order.id}"></td>
         <td th:text="${#temporals.format(order.transactionDate, 'dd-MM-yyyy HH:mm')}"></td>
         <td>
-            <a th:href="@{/admin/customer/{id}(id=${order.userId})}" th:text="${order.userId}"></a>
+            <a th:href="@{/admin/customer/{id}(id=${order.userId})}" th:text="${userList.get(count.count - 1).userName}"></a>
         </td>
         <td>
             <span th:each="book : ${order.cartItems}">

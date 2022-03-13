@@ -15,7 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootTest
 class BooklineApplicationTests {
@@ -207,4 +209,25 @@ class BooklineApplicationTests {
 //            System.out.println(u);
 //        }
 //    }
+
+    @Test
+    public void test(){
+        final Set<Book> set = new HashSet<>();
+        final Set<String> unique = new HashSet<>();
+        for(Book book : bookService.getAllBooks()){
+            if(!unique.add(book.getBookTitle())){
+                set.add(book);
+            }
+        }
+        int count = 0;
+        for(Book book: bookService.getAllBooks()){
+            for(Book duplicate: set){
+                if(duplicate.getBookIsbn().equals(book.getBookIsbn())){
+                    bookService.deleteBook(book.getBookIsbn());
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
 }
