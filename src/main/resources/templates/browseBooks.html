@@ -9,6 +9,11 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" href="css/style.css" type="text/css">
     <link rel="stylesheet" th:href="@{/css/header.css}" href="css/header.css" type="text/css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script type="text/javascript">
+        function changeSort(query){
+            window.location.replace("http://localhost:8080/books/" + query);
+        }
+    </script>
 </head>
 <body>
     <img class="header-logo" th:src="@{/img/bookline_logo.png}" style="height: 6.0rem; padding-left: 20px;">
@@ -36,7 +41,7 @@
         <br>
         <div class="sort-form">
             <span>Sort by</span>
-            <select style="max-width: 200px">
+            <select onchange="changeSort(value)" style="max-width: 200px">
                 <option th:value="${'?search=' + search + '&sort=rating&order=desc'}" th:selected="${attr == 1}">Rating: High to Low</option>
                 <option th:value="${'?search=' + search + '&sort=rating&order=asc'}" th:selected="${attr == 2}">Rating: Low to High</option>
                 <option th:value="${'?search=' + search + '&sort=price&order=desc'}" th:selected="${attr == 3}">Price: High to low</option>
